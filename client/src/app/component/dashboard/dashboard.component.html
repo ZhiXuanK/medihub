@@ -1,1 +1,52 @@
-<p>dashboard works!</p>
+<button type="button" (click)="linkCalendar()">link</button>
+<form [formGroup]="newAppointment" (submit)="processForm()">
+     <table>
+          <tr>
+               <td>Summary: </td>
+               <td>
+                    <input type="text" formControlName="summary" readonly>
+               </td>
+          </tr>
+          <tr>
+               <td>Description: </td>
+               <td>
+                    <input type="text" formControlName="description">
+               </td>
+          </tr>
+          <tr>
+               <td>Start: </td>
+               <td>
+                    <input type="datetime-local" formControlName="start">
+               </td>
+          </tr>
+          <tr>
+               <td>End: </td>
+               <td>
+                    <input type="datetime-local" formControlName="end">
+               </td>
+          </tr>
+          <tr>
+               <td></td>
+               <td>
+                    <button type="submit" [disabled]="newAppointment.invalid">add appointment</button>
+               </td>
+          </tr>
+     </table>
+</form>
+
+{{response$ | async}}
+
+<h2>My Calendar Events</h2>
+<button type="button" (click)="loadAppointments()">create</button>
+@if (events) {
+<ul>
+     <li *ngFor="let event of events">
+          {{ event.summary }} —
+          {{ event.description }} -
+          {{ event.start }} to
+          {{ event.end}}
+     </li>
+</ul>
+} @else {
+     <h2>no appointments</h2>
+}
