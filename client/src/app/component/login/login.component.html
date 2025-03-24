@@ -1,0 +1,23 @@
+
+
+<h1>LOG IN</h1> {{ errorMessage }}
+
+<form [formGroup]="user" (submit)="signIn()">
+
+    <div>
+        <label for="email">Email Address: </label>
+        <input type="email" formControlName="email" [ngClass]="{'is-valid': valid('email')}">
+    </div>
+
+    <div>
+        <label for="password">Password: </label>
+        <input type="password" formControlName="password" [ngClass]="{'is-valid': valid('password')}">
+    </div>
+
+    <div>
+        <button type="submit" [disabled]="user.invalid">LOG IN</button>
+    </div>
+
+</form>
+
+<button type="button" (click)="googleSignIn()">Google Sign In</button>
