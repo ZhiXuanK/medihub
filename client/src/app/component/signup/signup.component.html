@@ -5,17 +5,17 @@
 
     <div>
         <label for="email">Email Address: </label>
-        <input type="email" formControlName="email" [ngClass]="{'is-valid': valid('email')}">
+        <input type="email" formControlName="email" [ngClass]="{'is-valid': validCtrl(user, 'email')}">
     </div>
 
     <div>
         <label for="password">Password: </label>
-        <input type="password" formControlName="password" [ngClass]="{'is-valid': valid('password')}">
+        <input type="password" formControlName="password" [ngClass]="{'is-valid': validCtrl(user,'password')}">
     </div>
 
     <div>
         <label for="confirmPassword">Re-Enter Password: </label>
-        <input type="password" formControlName="confirmPassword" [ngClass]="{'is-valid': valid('confirmPassword')}">
+        <input type="password" formControlName="confirmPassword" [ngClass]="{'is-valid': validCtrl(user, 'confirmPassword')}">
     </div>
 
     <div>

@@ -44,11 +44,6 @@ export class SignupComponent {
     })
   }
 
-  protected valid(ctrlName: string): boolean {
-    const ctrl = this.user.get(ctrlName)
-    return !ctrl?.pristine && !!ctrl?.valid
-  }
-
   protected signUp() {
     const user: UserDetails = this.user.value
     console.info(">>>user detail: ", user)

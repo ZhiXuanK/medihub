@@ -10,6 +10,7 @@ declare const google: any
 export class CalendarService {
   private tokenClient: any;
   private accessToken: string = '';
+  private isAuthenticated:boolean = false;
 
   private authStore = inject(AuthStore)
 
@@ -26,9 +27,11 @@ export class CalendarService {
       callback: (tokenResponse: any) => {
         if (tokenResponse.error) {
           console.error("Error obtaining token: ", tokenResponse.error);
+          this.isAuthenticated = false
         } else {
-          //this.accessToken = tokenResponse.access_token;
-          this.authStore.setAuthStatus(tokenResponse.access_token)
+          this.accessToken = tokenResponse.access_token;
+          this.isAuthenticated = true
+          //this.authStore.setAuthStatus(tokenResponse.access_token)
           console.log('Access token obtained:', this.accessToken);
         }
       }
@@ -44,10 +47,12 @@ export class CalendarService {
       // Set the callback for the token client.
       this.tokenClient.callback = (tokenResponse: any) => {
         if (tokenResponse.error) {
+            this.isAuthenticated = false
           reject(tokenResponse.error);
         } else {
           this.accessToken = tokenResponse.access_token;
-          this.authStore.setAuthStatus(this.accessToken)
+          this.isAuthenticated = true
+          //this.authStore.setAuthStatus(this.accessToken)
           resolve(this.accessToken);
         }
       };
@@ -56,9 +61,17 @@ export class CalendarService {
     }));
   }
 
+  getAuthStatus():boolean {
+    return this.isAuthenticated
+  }
+
+  getToken():string {
+    return this.accessToken
+  }
+
   addMedicalAppointment(medAppt: MedicalAppointment): Observable<any> {
     //const token = this.accessToken
-    const token = this.authStore.response$
+    const token = this.accessToken
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     })
