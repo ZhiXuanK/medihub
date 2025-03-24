@@ -19,7 +19,10 @@ export class AppComponent implements OnInit, OnDestroy{
   private authStore = inject(AuthStore)
   private apiSvc = inject(APIService)
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
+
+    await this.apiSvc.retrieveApiKeys()
+
     this.authSub = this.authSvc.getAuthState$().subscribe(
       user => {
         if (user){
@@ -30,9 +33,7 @@ export class AppComponent implements OnInit, OnDestroy{
         }
       }
     )
-    this.apiSvc.retrieveApiKeys
-    console.log("cal:" , this.apiSvc.calApiKey);
-    console.log("map", this.apiSvc.mapsApiKey)
+
   }
 
   ngOnDestroy(): void {

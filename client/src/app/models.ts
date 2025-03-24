@@ -9,6 +9,10 @@ export interface AuthStatus {
     uid: string | null
 }
 
+export interface ApiKey {
+    apikey: string
+}
+
 export interface history {
     affected_member: string
     condition: string

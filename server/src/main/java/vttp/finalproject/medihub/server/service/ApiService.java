@@ -1,16 +1,16 @@
 package vttp.finalproject.medihub.server.service;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import com.google.api.client.util.Value;
 
 @Service
 public class ApiService {
     
-    @Value("${GOOGLEMAPS_API}")
+    @Value("${googlemaps.api}")
     private String mapsApi;
 
-    @Value("${GOOGLECAL_API}")
+    @Value("${googlecal.api}")
     private String calApi;
 
     public String getMapsApiKey(){
