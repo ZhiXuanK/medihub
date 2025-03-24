@@ -21,6 +21,7 @@ import { MapComponent } from './component/map/map.component';
 import { DashboardComponent } from './component/dashboard/dashboard.component';
 import { AuthService } from './services/firebase-auth.service';
 import { AuthGuard } from './auth.guards';
+import { VisitComponent } from './component/visit/visit.component';
 
 const appRoutes:Routes = [
   { path:'', component: LoginComponent },
@@ -38,7 +39,8 @@ const appRoutes:Routes = [
     SignupComponent,
     ProfileComponent,
     MapComponent,
-    DashboardComponent
+    DashboardComponent,
+    VisitComponent
   ],
   imports: [
     BrowserModule,
