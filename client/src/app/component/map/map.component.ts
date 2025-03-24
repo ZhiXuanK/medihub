@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
+import { APIService } from '../../services/api.service';
 
 @Component({
   selector: 'app-map',
@@ -7,6 +8,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrl: './map.component.css'
 })
 export class MapComponent implements OnInit{
+
+  private apiSvc = inject(APIService)
 
   map!: google.maps.Map;
   // directionService !: google.maps.DirectionsService
@@ -29,8 +32,9 @@ export class MapComponent implements OnInit{
           resolve();
           return;
         }
+        const mapKey = this.apiSvc.mapsApiKey
         const script = document.createElement('script')
-        script.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyC1M8t4DPilLHeJsmuiloHQT_YAMKFqeCk&loading=async&callback=initMap&libraries=places"
+        script.src = `https://maps.googleapis.com/maps/api/js?key=${mapKey}&loading=async&callback=initMap&libraries=places`
         script.onload = () => { resolve(); }
         script.onerror = (error: any) => { reject(error) }
         document.head.append(script)

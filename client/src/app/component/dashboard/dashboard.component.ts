@@ -16,13 +16,9 @@ export class DashboardComponent {
 
   private fb = inject(FormBuilder)
 
-  private authStore = inject(AuthStore)
   private calSvc = inject(CalendarService)
-  private subscriptions = new Subscription()
   authStatus!:boolean
   response!: string|null
-
-  response$ = this.authStore.response$
 
   // events:Event[]= []
   events:MedicalAppointment[] = []

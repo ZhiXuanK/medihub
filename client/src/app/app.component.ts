@@ -2,6 +2,7 @@ import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { AuthService } from './services/firebase-auth.service';
 import { AuthStore } from './stores/auth.store';
+import { APIService } from './services/api.service';
 
 @Component({
   selector: 'app-root',
@@ -16,6 +17,7 @@ export class AppComponent implements OnInit, OnDestroy{
 
   private authSvc = inject(AuthService)
   private authStore = inject(AuthStore)
+  private apiSvc = inject(APIService)
 
   ngOnInit(): void {
     this.authSub = this.authSvc.getAuthState$().subscribe(
@@ -28,6 +30,9 @@ export class AppComponent implements OnInit, OnDestroy{
         }
       }
     )
+    this.apiSvc.retrieveApiKeys
+    console.log("cal:" , this.apiSvc.calApiKey);
+    console.log("map", this.apiSvc.mapsApiKey)
   }
 
   ngOnDestroy(): void {

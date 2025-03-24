@@ -3,25 +3,28 @@ import { Injectable, inject } from "@angular/core"
 import { firstValueFrom, from, Observable, switchMap } from "rxjs"
 import { MedicalAppointment, Visit } from "../models"
 import { AuthStore } from "../stores/auth.store"
+import { APIService } from "./api.service"
 
 declare const google: any
 
 @Injectable()
 export class CalendarService {
+
   private tokenClient: any;
   private accessToken: string = '';
   private isAuthenticated:boolean = false;
 
-  private authStore = inject(AuthStore)
+  private apiSvc = inject(APIService)
 
   constructor(private http: HttpClient) {
     this.initializeTokenClient();
   }
 
   private initializeTokenClient(): void {
+    const calKey = this.apiSvc.calApiKey
     // Initialize the token client with your client ID and required scope.
     this.tokenClient = google.accounts.oauth2.initTokenClient({
-      client_id: '124215026994-fagtlh6oeha8e5g2768tu08p6d13aifm.apps.googleusercontent.com',
+      client_id: calKey,
       scope: 'https://www.googleapis.com/auth/calendar',
       // Define a callback that gets called when a token is returned.
       callback: (tokenResponse: any) => {

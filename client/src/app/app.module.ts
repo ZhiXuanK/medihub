@@ -22,6 +22,11 @@ import { DashboardComponent } from './component/dashboard/dashboard.component';
 import { AuthService } from './services/firebase-auth.service';
 import { AuthGuard } from './auth.guards';
 import { VisitComponent } from './component/visit/visit.component';
+import { AuthStore } from './stores/auth.store';
+import { CalendarService } from './services/calendar.service';
+import { UserService } from './services/user.service';
+import { VisitService } from './services/visit.service';
+import { APIService } from './services/api.service';
 
 const appRoutes:Routes = [
   { path:'', component: LoginComponent },
@@ -58,7 +63,12 @@ const appRoutes:Routes = [
       }
     }),
     AuthService,
-    AuthGuard
+    AuthGuard,
+    AuthStore,
+    CalendarService,
+    UserService,
+    VisitService,
+    APIService
   ],
   bootstrap: [AppComponent]
 })
