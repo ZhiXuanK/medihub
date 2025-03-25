@@ -27,6 +27,7 @@ import { CalendarService } from './services/calendar.service';
 import { UserService } from './services/user.service';
 import { VisitService } from './services/visit.service';
 import { APIService } from './services/api.service';
+import { PrimeModule } from './primeng.module';
 
 const appRoutes:Routes = [
   { path:'', component: LoginComponent },
@@ -52,7 +53,8 @@ const appRoutes:Routes = [
     ReactiveFormsModule,
     AngularFireModule.initializeApp(environment.firebase),
     GoogleMapsModule,
-    RouterModule.forRoot(appRoutes)
+    RouterModule.forRoot(appRoutes),
+    PrimeModule
   ],
   providers: [
     provideHttpClient(),

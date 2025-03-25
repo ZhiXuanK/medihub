@@ -1,23 +1,43 @@
 
+<div class="form-container">
+    <div class="form-card">
+        <h1 class="bold">Welcome Back to MediHub</h1>
 
-<h1>LOG IN</h1> {{ errorMessage }}
-
-<form [formGroup]="user" (submit)="signIn()">
-
-    <div>
-        <label for="email">Email Address: </label>
-        <input type="email" formControlName="email" [ngClass]="{'is-valid': valid('email')}">
+        <form [formGroup]="user" (submit)="signIn()">
+        
+            <div>
+                <p-iftalabel>
+                    <label for="email">Email</label>
+                    <input pInputText type="email" formControlName="email" [ngClass]="{'is-valid': valid('email')}">
+                </p-iftalabel>
+                <small *ngIf="user.get('email')?.invalid && user.get('email')?.touched" class="p-error">
+                    Please enter a valid email address
+                </small>
+            </div>
+            <br>
+            <div>
+                <p-ifta-label>
+                    <label for="password">Password: </label>
+                    <input pInputText type="password" formControlName="password" [ngClass]="{'is-valid': valid('password')}">
+                </p-ifta-label>
+                <small *ngIf="user.get('password')?.invalid && user.get('password')?.touched" class="p-error">
+                    Password must be at least 8 characters
+                </small>
+            </div>
+            <div class="p-error">
+                {{ errorMessage }}
+            </div>
+            <br>
+            <div class="button-row">
+                <p-button [rounded]="true" type="button" (click)="googleSignIn()">Google Sign In</p-button>
+                <p-button [rounded]="true" type="submit" [disabled]="user.invalid">LOG IN</p-button>
+            </div>       
+        </form>
+        <br>
+        <div class="even-row">
+            New to MediHub? <a [routerLink]="['/signup']">Sign Up Here</a>
+        </div>
     </div>
+</div>
 
-    <div>
-        <label for="password">Password: </label>
-        <input type="password" formControlName="password" [ngClass]="{'is-valid': valid('password')}">
-    </div>
 
-    <div>
-        <button type="submit" [disabled]="user.invalid">LOG IN</button>
-    </div>
-
-</form>
-
-<button type="button" (click)="googleSignIn()">Google Sign In</button>
