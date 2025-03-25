@@ -6,6 +6,7 @@ body {
     font-family: "Lato", sans-serif;
     font-weight: 400;
     font-style: normal;
+    background-image: url(/medihub-background.png);
 }
 
 button {
@@ -29,13 +30,20 @@ h1, h2, h3, h4, h5 {
 
 }
 
+.content-row {
+    width: 90%;
+    margin: 0 auto;
+    display: flex;
+    gap: 2%;
+}
+
 .form-container {
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
     padding: 20px;
-    background: var(--p-sky-50)
+    /* background: var(--p-sky-50) */
 }
 
 .form-card {
@@ -46,6 +54,7 @@ h1, h2, h3, h4, h5 {
     max-width: 90%;
     padding:2.5rem;
 }
+
 
 label {
     padding: 5px 0;
