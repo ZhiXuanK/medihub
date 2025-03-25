@@ -1,217 +1,216 @@
-
 @if (!isEditing) {
-    <div>
-    
-        <h1>Medical Profile</h1>
-    
-        <table>
-            <tr>
-                <td>Name: </td>
-                <td> {{profile.name}} </td>
-            </tr>
-            <tr>
-                <td>blood_type</td>
-                <td>
-                    {{profile.blood_type}}
-                </td>
-            </tr>
-            <tr>
-                <td>Past conditions: </td>
-                <td>
-                    <ul>
-                        @for (cond of profile.past_conditions; track $index) {
-                        <li>
-                            {{cond.condition}}
-                        </li>
-                        }
-                    </ul>
-                </td>
-            </tr>
-            <tr>
-                <td>Current conditions: </td>
-                <td>
-                    <ul>
-                        @for (cond of profile.current_conditions; track $index) {
-                        <li>
-                            {{cond.condition}}
-                        </li>
-                        }
-                    </ul>
-                </td>
-            </tr>
-            <tr>
-                <td>Family History: </td>
-                <td>
-                    <ul>
-                        @for (hist of profile.family_history; track $index) {
-                        <li>
-                            {{hist.affected_member}} --- {{hist.condition}}
-                        </li>
-                        }
-                    </ul>
-                </td>
-            </tr>
-            <tr>
-                <td>Drug Allergy: </td>
-                <td>
-                    <ul>
-                        @for (allergy of profile.drug_allergies; track $index) {
-                        <li>
-                            {{allergy.drug}} --- {{allergy.severity}}
-                        </li>
-                        }
-                    </ul>
-                </td>
-            </tr>
-            <tr>
-                <td>Ongoing Treatments: </td>
-                <td>
-                    <ul>
-                        @for (treat of profile.ongoing_treatments; track $index) {
-                        <li>
-                            {{treat.treatment}} --- {{treat.illness}} --- {{treat.start_date}}
-                        </li>
-                        }
-                    </ul>
-                </td>
-            </tr>
-        </table>
-    
-        <button type="button" (click)="edit()">Edit</button>
-    
-    </div>
-    }
-    
-    @if (isEditing) {
-    <div>
-        <form *ngIf="medProfile" [formGroup]="medProfile" (submit)="processForm()">
-    
-            <div>
-                <input type="text" formControlName="user_id" [ngClass]="{'is-valid': valid('user_id')}">
-            </div>
-    
-            <div>
-                <input type="text" formControlName="user_id" [ngClass]="{'is-valid': valid('user_id')}">
-            </div>
-    
-            <div>
-                <label for="blood_type">Blood Type:</label>
-                <select name="blood_type" formControlName="blood_type">
-                    <option value="A pos">A+</option>
-                    <option value="A neg">A-</option>
-                    <option value="B pos">B+</option>
-                    <option value="B neg">B-</option>
-                    <option value="AB pos">AB+</option>
-                    <option value="AB neg">AB-</option>
-                    <option value="O pos">O+</option>
-                    <option value="O neg">O-</option>
-                </select>
-            </div>
-    
-            <div>
-                <h5>Past Medical Conditions:</h5>
-                <button type="button" (click)="addPastConds()">Add past condition</button>
-                @if (pastConds.controls.length <= 0) { <h4>No past conditions recorded</h4>
+<div>
+
+    <h1>Medical Profile</h1>
+
+    <table>
+        <tr>
+            <td>Name: </td>
+            <td> {{profile.name}} </td>
+        </tr>
+        <tr>
+            <td>blood_type</td>
+            <td>
+                {{profile.blood_type}}
+            </td>
+        </tr>
+        <tr>
+            <td>Past conditions: </td>
+            <td>
+                <ul>
+                    @for (cond of profile.past_conditions; track $index) {
+                    <li>
+                        {{cond.condition}}
+                    </li>
                     }
-                    @else {
-                    <div formArrayName="past_conditions">
-                        @for (cond of pastConds.controls; let idx = $index; track cond) {
-                        <div [formGroupName]="idx">
-                            <input type="text" formControlName="condition"
-                                [ngClass]="{'is-valid': validCtrl(cond, 'condition')}">
-                            <button type="button" (click)="delPastConds(idx)">X</button>
-                        </div>
-                        }
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td>Current conditions: </td>
+            <td>
+                <ul>
+                    @for (cond of profile.current_conditions; track $index) {
+                    <li>
+                        {{cond.condition}}
+                    </li>
+                    }
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td>Family History: </td>
+            <td>
+                <ul>
+                    @for (hist of profile.family_history; track $index) {
+                    <li>
+                        {{hist.affected_member}} --- {{hist.condition}}
+                    </li>
+                    }
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td>Drug Allergy: </td>
+            <td>
+                <ul>
+                    @for (allergy of profile.drug_allergies; track $index) {
+                    <li>
+                        {{allergy.drug}} --- {{allergy.severity}}
+                    </li>
+                    }
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td>Ongoing Treatments: </td>
+            <td>
+                <ul>
+                    @for (treat of profile.ongoing_treatments; track $index) {
+                    <li>
+                        {{treat.treatment}} --- {{treat.illness}} --- {{treat.start_date}}
+                    </li>
+                    }
+                </ul>
+            </td>
+        </tr>
+    </table>
+
+    <button type="button" (click)="edit()">Edit</button>
+
+</div>
+}
+
+@if (isEditing) {
+<div>
+    <form *ngIf="medProfile" [formGroup]="medProfile" (submit)="processForm()">
+
+        <div>
+            <input type="text" formControlName="user_id" [ngClass]="{'is-valid': valid('user_id')}">
+        </div>
+
+        <div>
+            <input type="text" formControlName="user_id" [ngClass]="{'is-valid': valid('user_id')}">
+        </div>
+
+        <div>
+            <label for="blood_type">Blood Type:</label>
+            <select name="blood_type" formControlName="blood_type">
+                <option value="A pos">A+</option>
+                <option value="A neg">A-</option>
+                <option value="B pos">B+</option>
+                <option value="B neg">B-</option>
+                <option value="AB pos">AB+</option>
+                <option value="AB neg">AB-</option>
+                <option value="O pos">O+</option>
+                <option value="O neg">O-</option>
+            </select>
+        </div>
+
+        <div>
+            <h5>Past Medical Conditions:</h5>
+            <button type="button" (click)="addPastConds()">Add past condition</button>
+            @if (pastConds.controls.length <= 0) { <h4>No past conditions recorded</h4>
+                }
+                @else {
+                <div formArrayName="past_conditions">
+                    @for (cond of pastConds.controls; let idx = $index; track cond) {
+                    <div [formGroupName]="idx">
+                        <input type="text" formControlName="condition"
+                            [ngClass]="{'is-valid': validCtrl(cond, 'condition')}">
+                        <button type="button" (click)="delPastConds(idx)">X</button>
                     </div>
                     }
-            </div>
-    
-            <div>
-                <h5>Current Medical Conditions:</h5>
-                <button type="button" (click)="addCurrConds()">Add current condition</button>
-                @if (currConds.controls.length <= 0) { <h4>No current conditions recorded</h4>
-                    }
-                    @else {
-                    <div formArrayName="current_conditions">
-                        @for (cond of currConds.controls; let idx = $index; track cond) {
-                        <div [formGroupName]="idx">
-                            <span> {{idx}} </span>
-                            <input type="text" formControlName="condition"
-                                [ngClass]="{'is-valid': validCtrl(cond, 'condition')}">
-                            <button type="button" (click)="delCurrConds(idx)">X</button>
-                        </div>
-                        }
+                </div>
+                }
+        </div>
+
+        <div>
+            <h5>Current Medical Conditions:</h5>
+            <button type="button" (click)="addCurrConds()">Add current condition</button>
+            @if (currConds.controls.length <= 0) { <h4>No current conditions recorded</h4>
+                }
+                @else {
+                <div formArrayName="current_conditions">
+                    @for (cond of currConds.controls; let idx = $index; track cond) {
+                    <div [formGroupName]="idx">
+                        <span> {{idx}} </span>
+                        <input type="text" formControlName="condition"
+                            [ngClass]="{'is-valid': validCtrl(cond, 'condition')}">
+                        <button type="button" (click)="delCurrConds(idx)">X</button>
                     </div>
                     }
-            </div>
-    
-            <div>
-                <h5>Family History:</h5>
-                <button type="button" (click)="addFamHist()">Add family history</button>
-                @if (famHist.controls.length <= 0) { <h4>No family history recorded</h4>
-                    }
-                    @else {
-                    <div formArrayName="family_history">
-                        @for (hist of famHist.controls; let idx = $index; track hist) {
-                        <div [formGroupName]="idx">
-                            {{idx}}<input type="text" formControlName="affected_member"
-                                [ngClass]="{'is-valid': validCtrl(hist, 'affected_member')}">
-                            <input type="text" formControlName="condition"
-                                [ngClass]="{'is-valid': validCtrl(hist, 'condition')}">
-                        </div>
-                        <button type="button" (click)="delFamHist(idx)">X</button>
-                        }
+                </div>
+                }
+        </div>
+
+        <div>
+            <h5>Family History:</h5>
+            <button type="button" (click)="addFamHist()">Add family history</button>
+            @if (famHist.controls.length <= 0) { <h4>No family history recorded</h4>
+                }
+                @else {
+                <div formArrayName="family_history">
+                    @for (hist of famHist.controls; let idx = $index; track hist) {
+                    <div [formGroupName]="idx">
+                        {{idx}}<input type="text" formControlName="affected_member"
+                            [ngClass]="{'is-valid': validCtrl(hist, 'affected_member')}">
+                        <input type="text" formControlName="condition"
+                            [ngClass]="{'is-valid': validCtrl(hist, 'condition')}">
                     </div>
+                    <button type="button" (click)="delFamHist(idx)">X</button>
                     }
-            </div>
-    
-            <div>
-                <h5>Drug Allergy:</h5>
-                <button type="button" (click)="addDrugAlgy()">Add drug allergy</button>
-                @if (drugAlgy.controls.length <= 0) { <h4>No drug allergy recorded</h4>
-                    }
-                    @else {
-                    <div formArrayName="drug_allergies">
-                        @for (drug of drugAlgy.controls; let idx = $index; track drug) {
-                        <div [formGroupName]="idx">
-                            {{idx}}<input type="text" formControlName="drug"
-                                [ngClass]="{'is-valid': validCtrl(drug, 'affected_member')}">
-                            <select name="severity" formControlName="severity">
-                                <option value="mild">mild</option>
-                                <option value="moderate">moderate</option>
-                                <option value="severe">severe</option>
-                            </select>
-                        </div>
-                        <button type="button" (click)="delDrugAlgy(idx)">X</button>
-                        }
+                </div>
+                }
+        </div>
+
+        <div>
+            <h5>Drug Allergy:</h5>
+            <button type="button" (click)="addDrugAlgy()">Add drug allergy</button>
+            @if (drugAlgy.controls.length <= 0) { <h4>No drug allergy recorded</h4>
+                }
+                @else {
+                <div formArrayName="drug_allergies">
+                    @for (drug of drugAlgy.controls; let idx = $index; track drug) {
+                    <div [formGroupName]="idx">
+                        {{idx}}<input type="text" formControlName="drug"
+                            [ngClass]="{'is-valid': validCtrl(drug, 'affected_member')}">
+                        <select name="severity" formControlName="severity">
+                            <option value="mild">mild</option>
+                            <option value="moderate">moderate</option>
+                            <option value="severe">severe</option>
+                        </select>
                     </div>
+                    <button type="button" (click)="delDrugAlgy(idx)">X</button>
                     }
-            </div>
-    
-            <div>
-                <h5>Ongoing Treatment:</h5>
-                <button type="button" (click)="addTreatments()">Add Ongoing Treatments</button>
-                @if (treatments.controls.length <= 0) { <h4>No ongoing treatments recorded</h4>
-                    }
-                    @else {
-                    <div formArrayName="ongoing_treatments">
-                        @for (treatment of treatments.controls; let idx = $index; track treatment) {
-                        <div [formGroupName]="idx">
-                            {{idx}}<input type="text" formControlName="treatment"
-                                [ngClass]="{'is-valid': validCtrl(treatment, 'treatment')}">
-                            <input type="text" formControlName="illness"
-                                [ngClass]="{'is-valid': validCtrl(treatment, 'illness')}">
-                            <input type="date" formControlName="start_date"
-                                [ngClass]="{'is-valid': validCtrl(treatment, 'start_date')}">
-                        </div>
-                        <button type="button" (click)="delTreatment(idx)">X</button>
-                        }
+                </div>
+                }
+        </div>
+
+        <div>
+            <h5>Ongoing Treatment:</h5>
+            <button type="button" (click)="addTreatments()">Add Ongoing Treatments</button>
+            @if (treatments.controls.length <= 0) { <h4>No ongoing treatments recorded</h4>
+                }
+                @else {
+                <div formArrayName="ongoing_treatments">
+                    @for (treatment of treatments.controls; let idx = $index; track treatment) {
+                    <div [formGroupName]="idx">
+                        {{idx}}<input type="text" formControlName="treatment"
+                            [ngClass]="{'is-valid': validCtrl(treatment, 'treatment')}">
+                        <input type="text" formControlName="illness"
+                            [ngClass]="{'is-valid': validCtrl(treatment, 'illness')}">
+                        <input type="date" formControlName="start_date"
+                            [ngClass]="{'is-valid': validCtrl(treatment, 'start_date')}">
                     </div>
+                    <button type="button" (click)="delTreatment(idx)">X</button>
                     }
-            </div>
-    
-            <button type="submit">submit form</button>
-        </form>
-    </div>
-    
-    }
+                </div>
+                }
+        </div>
+
+        <button type="submit">submit form</button>
+    </form>
+</div>
+
+}

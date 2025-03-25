@@ -24,7 +24,8 @@ COPY server/pom.xml .
 # Copy angular files over to static
 COPY --from=ng-build /src/dist/client/browser/* src/main/resources/static
 
-RUN chmod a+x mvnw && ./mvnw package -Dmaven.test.skip=true
+#RUN chmod a+x mvnw && ./mvnw package -Dmaven.test.skip=true
+RUN ./mvnw package -Dmaven.test.skip=true
 
 # Copy the JAR file over to the final container
 FROM openjdk:23-jdk 

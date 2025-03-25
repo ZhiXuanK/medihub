@@ -28,7 +28,7 @@ public class FirebaseInitializer {
     @Bean
     public FirebaseApp firebaseApp() throws IOException {
         Resource resource = resourceLoader.getResource(filepath);
-
+        System.out.println(">>>resource: " + resource.exists());
         InputStream serviceAccount = resource.getInputStream();
         System.out.println("firebase json path: " + filepath);
         FirebaseOptions options = FirebaseOptions.builder()
