@@ -1,163 +1,218 @@
+@if (!registered) {
+<div class="form-container">
+    <div class="form-card">
+        <h1>Welcome to Medihub</h1>
+        <h1>SIGN UP</h1> {{ errorMessage }}
+
+        <form [formGroup]="user" (submit)="signUp()">
+
+            <div>
+                <p-iftalabel>
+                    <label for="email">Email</label>
+                    <input pInputText type="email" formControlName="email"
+                        [ngClass]="{'is-valid': validCtrl(user, 'email')}">
+                </p-iftalabel>
+                <small *ngIf="user.get('email')?.invalid && user.get('email')?.touched" class="p-error">
+                    Please enter a valid email address
+                </small>
+            </div>
+
+            <div>
+                <p-ifta-label>
+                    <label for="password">Password</label>
+                    <input pInputText type="password" formControlName="password"
+                        [ngClass]="{'is-valid': validCtrl(user,'password')}">
+                </p-ifta-label>
+                <small *ngIf="user.get('password')?.invalid && user.get('password')?.touched" class="p-error">
+                    Password must have minimum 8 characters with at least one letter and one number
+                </small>
+            </div>
+
+            <div>
+                <p-ifta-label>
+                    <label for="confirmPassword">Re-Enter Password: </label>
+                    <input pInputText type="password" formControlName="confirmPassword"
+                        [ngClass]="{'is-valid': validCtrl(user, 'confirmPassword')}">
+                </p-ifta-label>
+                <small *ngIf="user.hasError('mustMatch')" class="p-error">
+                    Passwords do not match.
+                </small>
+            </div>
+
+            <div style="text-align: right;">
+                <p-button type="submit" [disabled]="user.invalid">CREATE ACCOUNT</p-button>
+            </div>
+
+        </form>
+    </div>
+</div>
+} @else {
 
 <div class="form-container">
     <div class="form-card">
-        
+        <h1>User Profile Registration</h1>
+
+        <form *ngIf="medProfile" [formGroup]="medProfile" (submit)="processForm()">
+
+            <div>
+                <input type="hidden" formControlName="user_id" [ngClass]="{'is-valid': valid('user_id')}">
+            </div>
+
+            <div>
+                <p-ifta-label>
+                    <label for="name">Name</label>
+                    <input pInputText type="text" formControlName="name" [ngClass]="{'is-valid': valid('name')}">
+                </p-ifta-label>
+                <small *ngIf="medProfile.get('name')?.invalid && medProfile.get('name')?.touched" class="p-error">
+                    Please enter your name
+                </small>
+            </div>
+
+            <div>
+                <!-- <label for="blood_type">Blood Type:</label> -->
+                <!-- <select name="blood_type" formControlName="blood_type">
+                        <option value="A pos">A+</option>
+                        <option value="A neg">A-</option>
+                        <option value="B pos">B+</option>
+                        <option value="B neg">B-</option>
+                        <option value="AB pos">AB+</option>
+                        <option value="AB neg">AB-</option>
+                        <option value="O pos">O+</option>
+                        <option value="O neg">O-</option>
+                    </select> -->
+                <p-dropdown formControlName="blood_type" [options]="bloodTypes" placeholder="Select Your Bloodtype" />
+            </div>
+
+            <div>
+                <div class="even-row">
+                    <p>Past Medical Conditions</p>
+                    <p-button icon="pi pi-plus" type="button" (click)="addPastConds()" />
+                </div>
+
+                @if (pastConds.controls.length <= 0) { <h4>No past conditions recorded</h4>
+                    }
+                    @else {
+                    <div formArrayName="past_conditions">
+                        @for (cond of pastConds.controls; let idx = $index; track cond) {
+                        <div [formGroupName]="idx" class="even-row">
+                            <p-ifta-label>
+                                <label for="condition">Past Condition</label>
+                                <input pInputText type="text" formControlName="condition"
+                                    [ngClass]="{'is-valid': validCtrl(cond, 'condition')}">
+                            </p-ifta-label>
+                            <p-button icon="pi pi-times" type="button" (click)="delPastConds(idx)" />
+                        </div>
+                        }
+                    </div>
+                    }
+            </div>
+
+
+            <div>
+                <div class="even-row">
+                    <p>Current Medical Conditions:</p>
+                    <p-button icon="pi pi-plus" type="button" (click)="addCurrConds()"/>
+                </div>
+
+                @if (currConds.controls.length <= 0) { <h4>No current conditions recorded</h4>
+                    }
+                    @else {
+                    <div formArrayName="current_conditions">
+                        @for (cond of currConds.controls; let idx = $index; track cond) {
+                        <div [formGroupName]="idx" class="even-row">
+                            <p-ifta-label>
+                                <label for="condition">Current Condition</label>
+                                <input pInputText type="text" formControlName="condition"
+                                [ngClass]="{'is-valid': validCtrl(cond, 'condition')}">
+                            </p-ifta-label>
+                            <p-button icon="pi pi-times" type="button" (click)="delCurrConds(idx)" />
+                        </div>
+                        }
+                    </div>
+                    }
+            </div>
+
+            <div>
+                <div class="even-row">
+                    <p>Family History:</p>
+                    <p-button icon="pi pi-plus" type="button" (click)="addFamHist()" />
+                </div>
+
+                @if (famHist.controls.length <= 0) { <h4>No family history recorded</h4>
+                    }
+                    @else {
+                    <div formArrayName="family_history">
+                        @for (hist of famHist.controls; let idx = $index; track hist) {
+                        <div [formGroupName]="idx" class="even-row">
+                            {{idx + 1}}
+                            <p-ifta-label>
+                                <label for="affected_member">Affected Family Member</label>
+                                <input pInputText type="text" formControlName="affected_member"
+                                    [ngClass]="{'is-valid': validCtrl(hist, 'affected_member')}">
+                                </p-ifta-label>
+                                <p-ifta-label>
+                                    <label for="condition">Condition</label>
+                                    <input pInputText type="text" formControlName="condition"
+                                        [ngClass]="{'is-valid': validCtrl(hist, 'condition')}">
+                                </p-ifta-label>
+                            <p-button icon="pi pi-times" type="button" (click)="delFamHist(idx)" />
+                        </div>
+                        }
+                    </div>
+                    }
+            </div>
+
+            <div>
+                <div class="even-row">
+                    <h5>Drug Allergy:</h5>
+                    <p-button icon="pi pi-plus" type="button" (click)="addDrugAlgy()" />
+                </div>
+
+                @if (drugAlgy.controls.length <= 0) { <h4>No drug allergy recorded</h4>
+                    }
+                    @else {
+                    <div formArrayName="drug_allergies">
+                        @for (drug of drugAlgy.controls; let idx = $index; track drug) {
+                        <div [formGroupName]="idx">
+                            {{idx}}<input type="text" formControlName="drug"
+                                [ngClass]="{'is-valid': validCtrl(drug, 'affected_member')}">
+                            <select name="severity" formControlName="severity">
+                                <option value="mild">mild</option>
+                                <option value="moderate">moderate</option>
+                                <option value="severe">severe</option>
+                            </select>
+                        </div>
+                        <button type="button" (click)="delDrugAlgy(idx)">X</button>
+                        }
+                    </div>
+                    }
+            </div>
+
+            <div>
+                <h5>Ongoing Treatment:</h5>
+                <button type="button" (click)="addTreatments()">Add Ongoing Treatments</button>
+                @if (treatments.controls.length <= 0) { <h4>No ongoing treatments recorded</h4>
+                    }
+                    @else {
+                    <div formArrayName="ongoing_treatments">
+                        @for (treatment of treatments.controls; let idx = $index; track treatment) {
+                        <div [formGroupName]="idx">
+                            {{idx}}<input type="text" formControlName="treatment"
+                                [ngClass]="{'is-valid': validCtrl(treatment, 'treatment')}">
+                            <input type="text" formControlName="illness"
+                                [ngClass]="{'is-valid': validCtrl(treatment, 'illness')}">
+                            <input type="date" formControlName="start_date"
+                                [ngClass]="{'is-valid': validCtrl(treatment, 'start_date')}">
+                        </div>
+                        <button type="button" (click)="delTreatment(idx)">X</button>
+                        }
+                    </div>
+                    }
+            </div>
+
+            <button type="submit" [disabled]="medProfile.invalid">submit form</button>
+        </form>
     </div>
 </div>
 
-<h1>SIGN UP</h1> {{ errorMessage }}
-
-<form [formGroup]="user" (submit)="signUp()">
-
-    <div>
-        <label for="email">Email Address: </label>
-        <input type="email" formControlName="email" [ngClass]="{'is-valid': validCtrl(user, 'email')}">
-    </div>
-
-    <div>
-        <label for="password">Password: </label>
-        <input type="password" formControlName="password" [ngClass]="{'is-valid': validCtrl(user,'password')}">
-    </div>
-
-    <div>
-        <label for="confirmPassword">Re-Enter Password: </label>
-        <input type="password" formControlName="confirmPassword" [ngClass]="{'is-valid': validCtrl(user, 'confirmPassword')}">
-    </div>
-
-    <div>
-        <button type="submit" [disabled]="user.invalid">CREATE ACCOUNT</button>
-    </div>
-
-</form>
-
-
-<div>
-    <h1>Sign Up Form</h1>
-</div>
-
-
-<form *ngIf="medProfile" [formGroup]="medProfile" (submit)="processForm()">
-
-    <div>
-        <input type="hidden" formControlName="user_id" [ngClass]="{'is-valid': valid('user_id')}">
-    </div>
-
-    <div>
-        <label for="name">Name: </label>
-        <input type="text" formControlName="name" [ngClass]="{'is-valid': valid('name')}">
-    </div>
-
-    <div>
-        <label for="blood_type">Blood Type:</label>
-        <select name="blood_type" formControlName="blood_type">
-            <option value="A pos">A+</option>
-            <option value="A neg">A-</option>
-            <option value="B pos">B+</option>
-            <option value="B neg">B-</option>
-            <option value="AB pos">AB+</option>
-            <option value="AB neg">AB-</option>
-            <option value="O pos">O+</option>
-            <option value="O neg">O-</option>
-        </select>
-    </div>
-
-    <div >
-        <h5>Past Medical Conditions:</h5>
-        <button type="button" (click)="addPastConds()">Add past condition</button>
-        @if (pastConds.controls.length <= 0) {
-            <h4>No past conditions recorded</h4>
-        } 
-        @else {
-            <div formArrayName="past_conditions">
-                @for (cond of pastConds.controls; let idx = $index; track cond) {
-                    <div [formGroupName]="idx">
-                        <input type="text" formControlName="condition" [ngClass]="{'is-valid': validCtrl(cond, 'condition')}">
-                        <button type="button" (click)="delPastConds(idx)">X</button>
-                    </div>
-                }
-            </div>
-        }
-    </div>
-
-    <div>
-        <h5>Current Medical Conditions:</h5>
-        <button type="button" (click)="addCurrConds()">Add current condition</button>
-        @if (currConds.controls.length <= 0) {
-            <h4>No current conditions recorded</h4>
-        } 
-        @else {
-            <div formArrayName="current_conditions">
-                @for (cond of currConds.controls; let idx = $index; track cond) {
-                    <div [formGroupName]="idx">
-                        <input type="text" formControlName="condition" [ngClass]="{'is-valid': validCtrl(cond, 'condition')}">
-                        <button type="button" (click)="delCurrConds(idx)">X</button>
-                    </div>
-                }
-            </div>
-        }
-    </div>
-
-    <div>
-        <h5>Family History:</h5>
-        <button type="button" (click)="addFamHist()">Add family history</button>
-        @if (famHist.controls.length <= 0) {
-            <h4>No family history recorded</h4>
-        } 
-        @else {
-            <div formArrayName="family_history">
-                @for (hist of famHist.controls; let idx = $index; track hist) {
-                    <div [formGroupName]="idx">
-                        {{idx}}<input type="text" formControlName="affected_member" [ngClass]="{'is-valid': validCtrl(hist, 'affected_member')}">
-                        <input type="text" formControlName="condition" [ngClass]="{'is-valid': validCtrl(hist, 'condition')}">
-                    </div>
-                    <button type="button" (click)="delFamHist(idx)">X</button>
-                }
-            </div>
-        }
-    </div>
-
-    <div>
-        <h5>Drug Allergy:</h5>
-        <button type="button" (click)="addDrugAlgy()">Add drug allergy</button>
-        @if (drugAlgy.controls.length <= 0) {
-            <h4>No drug allergy recorded</h4>
-        } 
-        @else {
-            <div formArrayName="drug_allergies">
-                @for (drug of drugAlgy.controls; let idx = $index; track drug) {
-                    <div [formGroupName]="idx">
-                        {{idx}}<input type="text" formControlName="drug" [ngClass]="{'is-valid': validCtrl(drug, 'affected_member')}">
-                        <select name="severity" formControlName="severity">
-                            <option value="mild">mild</option>
-                            <option value="moderate">moderate</option>
-                            <option value="severe">severe</option>
-                        </select>
-                    </div>
-                    <button type="button" (click)="delDrugAlgy(idx)">X</button>
-                }
-            </div>
-        }
-    </div>
-
-    <div>
-        <h5>Ongoing Treatment:</h5>
-        <button type="button" (click)="addTreatments()">Add Ongoing Treatments</button>
-        @if (treatments.controls.length <= 0) {
-            <h4>No ongoing treatments recorded</h4>
-        } 
-        @else {
-            <div formArrayName="ongoing_treatments">
-                @for (treatment of treatments.controls; let idx = $index; track treatment) {
-                    <div [formGroupName]="idx">
-                        {{idx}}<input type="text" formControlName="treatment" [ngClass]="{'is-valid': validCtrl(treatment, 'treatment')}">
-                        <input type="text" formControlName="illness" [ngClass]="{'is-valid': validCtrl(treatment, 'illness')}">
-                        <input type="date" formControlName="start_date" [ngClass]="{'is-valid': validCtrl(treatment, 'start_date')}">
-                    </div>
-                    <button type="button" (click)="delTreatment(idx)">X</button>
-                }
-            </div>
-        }
-    </div>
-
-    <button type="submit" [disabled]="medProfile.invalid">submit form</button>
-</form>
+}

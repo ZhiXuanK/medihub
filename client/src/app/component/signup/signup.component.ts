@@ -20,6 +20,7 @@ export class SignupComponent {
   private activatedRoute = inject(ActivatedRoute)
 
   uid: string = ""
+  registered:boolean = true
   
   medProfile !: FormGroup
   pastConds !: FormArray
@@ -31,6 +32,8 @@ export class SignupComponent {
   user !: FormGroup
 
   errorMessage: string = ''
+
+  bloodTypes = ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-']
 
 
   //Minimum eight characters, at least one letter and one number:
@@ -51,7 +54,7 @@ export class SignupComponent {
       .then(res => {
         console.log('User registered: ', res.user?.uid)
         this.userSvc.signup()
-        this.router.navigate(['/signup'])
+        this.registered=true
       })
       .catch(err => {
         console.error('error: ', err)
@@ -70,7 +73,7 @@ export class SignupComponent {
       this.errorMessage = params['error'] || ''
     })
 
-    const uid = await this.authSvc.getCurrentUserId$()
+    const uid = 'abc'//await this.authSvc.getCurrentUserId$()
     this.uid = uid
     this.medProfile = this.createMedProfile()
   }
@@ -179,7 +182,7 @@ export class SignupComponent {
 
     return this.fb.group({
       user_id: this.fb.control<string>(this.uid), //keep hidden in HTML
-      name: this.fb.control<string>('', [Validators.required]),
+      name: this.fb.control<string>('', [Validators.required, Validators.minLength(2)]),
       blood_type: this.fb.control<string>('', [Validators.required]),
       past_conditions: this.pastConds,
       current_conditions: this.currConds,

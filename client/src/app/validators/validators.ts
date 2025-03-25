@@ -12,16 +12,18 @@ export function confirmPasswordValidator (passwordKey: string, confirmPasswordKe
             return null
         }
 
-        //if password don't match, error on confirmPasswordCtrl
-        if (passwordCtrl.value !== confirmPasswordCtrl.value){
-            confirmPasswordCtrl.setErrors({mustMatch: true})
-        } else {
-            //no error if password match
-            if (confirmPasswordCtrl.hasError('mustMatch')){
-                confirmPasswordCtrl.setErrors(null)
-            }
-        }
-        return null
+        return passwordCtrl.value !== confirmPasswordCtrl.value ? { mustMatch: true } : null;
+
+        // //if password don't match, error on confirmPasswordCtrl
+        // if (passwordCtrl.value !== confirmPasswordCtrl.value){
+        //     confirmPasswordCtrl.setErrors({mustMatch: true})
+        // } else {
+        //     //no error if password match
+        //     if (confirmPasswordCtrl.hasError('mustMatch')){
+        //         confirmPasswordCtrl.setErrors(null)
+        //     }
+        // }
+        // return null
     }
 
 }

@@ -1,4 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
+@import "primeicons/primeicons.css";
 
 /* Entire Document Changes */
 body {
@@ -42,13 +43,17 @@ h1, h2, h3, h4, h5 {
     border-radius: 12px;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
     width: 100%;
-    max-width: 420px;
+    max-width: 90%;
     padding:2.5rem;
+}
+
+label {
+    padding: 5px 0;
 }
 
 input {
     width: calc(100%);
-    margin: 0px;
+    margin: 7px 0 3px 0;
     box-sizing: border-box;
 }
 
@@ -67,4 +72,16 @@ input {
 .even-row {
     display: flex;
     justify-content: space-between;
+    width: 100%;
+    align-items: center;
+    gap: 7px;
 }
+
+.even-row p-ifta-label {
+    flex: 1;
+  }
+  
+  /* .even-row p-button {
+    flex: none;
+    margin-left: 4px;
+  } */
