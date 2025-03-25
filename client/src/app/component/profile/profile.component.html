@@ -1,15 +1,14 @@
 @if (!isEditing) {
-<div>
-
-    <h1>Medical Profile</h1>
+<div class="content-card">
+    <h1 style="text-align: center;">Medical Profile</h1>
 
     <table>
         <tr>
             <td>Name: </td>
-            <td> {{profile.name}} </td>
+            <td colspan="3"> {{profile.name}} </td>
         </tr>
         <tr>
-            <td>blood_type</td>
+            <td>Blood Type:</td>
             <td>
                 {{profile.blood_type}}
             </td>

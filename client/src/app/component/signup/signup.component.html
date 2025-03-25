@@ -49,7 +49,7 @@
 } @else {
 
 <div class="form-container">
-    <div class="form-card">
+    <div class="form-card" *ngIf="medProfile">
         <h1>User Profile Registration</h1>
 
         <form *ngIf="medProfile" [formGroup]="medProfile" (submit)="processForm()">

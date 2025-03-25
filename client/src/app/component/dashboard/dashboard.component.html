@@ -39,7 +39,7 @@
 
 
 <button type="button" (click)="linkCalendar()">link</button>
-<form [formGroup]="newAppointment" (submit)="processForm()">
+<form *ngIf="newAppointment" [formGroup]="newAppointment" (submit)="processForm()">
      <table>
           <tr>
                <td>Summary: </td>

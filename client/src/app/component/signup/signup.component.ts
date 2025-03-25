@@ -1,10 +1,11 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, Validators, AbstractControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserDetails, MedicalProfileDetails } from '../../models';
 import { AuthService } from '../../services/firebase-auth.service';
 import { UserService } from '../../services/user.service';
 import { confirmPasswordValidator } from '../../validators/validators';
+import { AuthStore } from '../../stores/auth.store';
 
 @Component({
   selector: 'app-signup',
@@ -12,9 +13,10 @@ import { confirmPasswordValidator } from '../../validators/validators';
   templateUrl: './signup.component.html',
   styleUrl: './signup.component.css'
 })
-export class SignupComponent {
+export class SignupComponent implements OnInit, OnDestroy{
   private fb = inject(FormBuilder)
   private authSvc = inject(AuthService)
+  private authStore = inject(AuthStore)
   private userSvc = inject(UserService)
   private router = inject(Router)
   private activatedRoute = inject(ActivatedRoute)
@@ -35,6 +37,10 @@ export class SignupComponent {
 
   bloodTypes = ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-']
   severityTypes = ['mild', 'moderate', 'severe']
+
+  ngOnDestroy(): void {
+    this.registered=false
+  }
 
 
   //Minimum eight characters, at least one letter and one number:
@@ -73,10 +79,15 @@ export class SignupComponent {
     this.activatedRoute.queryParams.subscribe(params => {
       this.errorMessage = params['error'] || ''
     })
+    const uid = await this.authStore.userId$.subscribe(res => {
+      console.log("res"+res)
+      this.uid = res!
+      console.log(this.uid)
+      this.medProfile = this.createMedProfile()
+    })
+    //const uid = await this.authSvc.getCurrentUserId$().then(res => this.uid = res)
+    //this.uid = uid
 
-    const uid = 'abc'//await this.authSvc.getCurrentUserId$()
-    this.uid = uid
-    this.medProfile = this.createMedProfile()
   }
 
   //validity of form control

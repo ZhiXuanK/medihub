@@ -61,7 +61,7 @@ public class UserController {
     ){
         System.out.println(uid);
         Optional<String> profile = userSvc.retrieveProfile(uid);
-
+        System.out.println(profile.get());
         if (profile.isEmpty()){
             return ResponseEntity.notFound().build();
         }

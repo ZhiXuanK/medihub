@@ -33,7 +33,7 @@ export class UserService {
             user => {
                 const params = new HttpParams().append("uid", user!.uid)
                 console.log(">>>parans: ", params)
-                return firstValueFrom(this.http.get<MedicalProfileDetails>('/api/user/retrieveprofile', {params})).then(res => {console.log(res); return res})
+                return firstValueFrom(this.http.get<MedicalProfileDetails>('/api/user/retrieveprofile', {params}))
             }
         )
     }
