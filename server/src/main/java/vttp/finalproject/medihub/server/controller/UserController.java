@@ -59,6 +59,7 @@ public class UserController {
     public ResponseEntity<String> getRetrieveProfile(
         @RequestParam String uid
     ){
+        System.out.println(uid);
         Optional<String> profile = userSvc.retrieveProfile(uid);
 
         if (profile.isEmpty()){

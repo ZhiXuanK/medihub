@@ -6,6 +6,7 @@ import { IftaLabelModule } from 'primeng/iftalabel';
 import { ButtonModule } from 'primeng/button';
 import { DropdownModule } from 'primeng/dropdown';
 import { TabMenuModule } from 'primeng/tabmenu';
+import { TableModule } from 'primeng/table';
 
 
 @NgModule({
@@ -14,7 +15,8 @@ import { TabMenuModule } from 'primeng/tabmenu';
         IftaLabelModule,
         ButtonModule,
         DropdownModule,
-        TabMenuModule
+        TabMenuModule,
+        TableModule
     ]
 })
 

@@ -22,7 +22,8 @@ export class ProfileComponent {
 
   async ngOnInit(): Promise<void> {
 
-    const profile = await this.userSvc.retrieveProfile()
+    const profile = await this.userSvc.retrieveProfile().then(res => this.profile = res)
+    console.log(profile)
     this.profile = profile
     console.log(profile)
     this.medProfile = this.createMedProfile()

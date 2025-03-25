@@ -45,8 +45,12 @@ public class Utils {
         """;
 
     public static final String Q_RETRIEVE_MEDICINE_TIME_STRING = """
-        select med.*, v.user_id from medicine as med inner join visit as v on med.visit_id = v.visit_id where med.start_date <= ? <= med.end_date and med.timing like ? and v.user_id=?
+        select med.*, v.user_id from medicine as med inner join visit as v on med.visit_id = v.visit_id where med.start_date <= ? <= med.end_date and med.timing like ? and v.user_id=? and dosage >0
         """;
+
+    public static final String Q_REDUCE_DOSAGE = """
+            UPDATE medicine SET dosage=dosage-1 where med_id=?
+            """;
 
     //methods
     public static Date stringToDate(String date) throws ParseException{

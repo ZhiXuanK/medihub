@@ -1,10 +1,11 @@
 import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { MedicalAppointment } from '../../models';
+import { MedicalAppointment, MedicineDisplay } from '../../models';
 import { CalendarService } from '../../services/calendar.service';
 import { AuthStore } from '../../stores/auth.store';
 import { checkDateValidator } from '../../validators/validators';
+import { MedicineService } from '../../services/medicine.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -17,16 +18,40 @@ export class DashboardComponent {
   private fb = inject(FormBuilder)
 
   private calSvc = inject(CalendarService)
+  private medSvc = inject(MedicineService)
+  private authStore = inject(AuthStore)
   authStatus!:boolean
   response!: string|null
+
+  uid !: string
 
   // events:Event[]= []
   events:MedicalAppointment[] = []
 
   newAppointment !: FormGroup
 
-  ngOnInit(): void {
+  mornMeds!: MedicineDisplay[]
+  aftMeds !: MedicineDisplay[]
+  nightMeds !: MedicineDisplay[]
+
+  async ngOnInit(): Promise<void> {
+    await this.authStore.userId$.subscribe(res => this.uid = res!)
     this.newAppointment = this.initializeAppointment()
+  }
+
+  //medicine schedule
+  async loadMedicineSchedule():Promise<void>{
+    this.medSvc.retrieveMedicineOfTheDay(this.uid).then(
+      res => {
+        this.mornMeds = res.morning
+        this.aftMeds = res.afternoon
+        this.nightMeds = res.night
+      }
+    )
+  }
+
+  reduceDosage(med_id:string){
+    this.medSvc.reduceDosage(med_id)
   }
 
   //calendar

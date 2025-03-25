@@ -8,6 +8,9 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import jakarta.json.Json;
+import jakarta.json.JsonArray;
+import jakarta.json.JsonArrayBuilder;
 import jakarta.json.JsonObject;
 import vttp.finalproject.medihub.server.repository.MedicineRepository;
 import vttp.finalproject.medihub.server.repository.ProfileRepository;
@@ -45,5 +48,40 @@ public class MedicineService {
     public Map<String, List<String>> getMedicineSchedule(String uid) throws ParseException{
         Map<String, List<String>> medicine = medRepo.getMedicineOfTheDay(uid);
         return medicine;
+    }
+
+    public JsonObject getMedicineScheduleWithId(String uid) throws ParseException{
+        Map<String, List<JsonObject>> results = medRepo.getMedicineOfTheDayWithId(uid);
+
+        JsonArrayBuilder mornBuild = Json.createArrayBuilder();
+        for (JsonObject obj: results.get("morning")){
+            mornBuild.add(obj);
+        }
+        JsonArray mornArr = mornBuild.build();
+
+        JsonArrayBuilder aftBuild = Json.createArrayBuilder();
+        for (JsonObject obj:results.get("afternoon")){
+            aftBuild.add(obj);
+        }
+        JsonArray aftArr = aftBuild.build();
+
+        JsonArrayBuilder nightBuild = Json.createArrayBuilder();
+        for (JsonObject obj:results.get("night")){
+            nightBuild.add(obj);
+        }
+        JsonArray nightArr = nightBuild.build();
+
+        JsonObject schedule = Json.createObjectBuilder()
+            .add("morning", mornArr)
+            .add("afternoon", aftBuild)
+            .add("night", nightBuild)
+            .build();
+
+        return schedule;
+
+    }
+
+    public void reduceMed(String med_id){
+        this.medRepo.reduceMed(med_id);
     }
 }

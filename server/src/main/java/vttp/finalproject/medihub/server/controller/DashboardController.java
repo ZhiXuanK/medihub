@@ -5,7 +5,9 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -41,6 +43,24 @@ public class DashboardController {
             .build();
 
         return ResponseEntity.ok(response.toString());
+    }
+
+    @GetMapping("/medicineschedule/{uid}")
+    public ResponseEntity<String> getMedicineSchedule(
+        @PathVariable String uid
+    ) throws ParseException{
+        JsonObject results = medSvc.getMedicineScheduleWithId(uid);
+
+        return ResponseEntity.ok(results.toString());
+    }
+
+    @DeleteMapping("/medicineschedule/{med_id}")
+    public ResponseEntity<String> reduceMedicineDosage(
+        @PathVariable String med_id
+    ) throws ParseException{
+        medSvc.reduceMed(med_id);
+
+        return ResponseEntity.ok("");
     }
     
     

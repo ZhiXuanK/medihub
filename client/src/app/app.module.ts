@@ -28,14 +28,15 @@ import { UserService } from './services/user.service';
 import { VisitService } from './services/visit.service';
 import { APIService } from './services/api.service';
 import { PrimeModule } from './primeng.module';
+import { MedicineService } from './services/medicine.service';
 
 const appRoutes:Routes = [
   { path:'', component: LoginComponent },
   { path:'signup', component: SignupComponent },
-  { path:'dashboard', component: DashboardComponent },
-  { path:'profile', component:ProfileComponent },
-  { path:'map', component: MapComponent},
-  { path:'**', component:DashboardComponent }
+  { path:'dashboard', component: DashboardComponent, canActivate:[AuthGuard] },
+  { path:'profile', component:ProfileComponent, canActivate:[AuthGuard]},
+  { path:'map', component: MapComponent, canActivate:[AuthGuard]},
+  { path:'**', component:DashboardComponent, canActivate:[AuthGuard]}
 ];
 
 @NgModule({
@@ -70,7 +71,8 @@ const appRoutes:Routes = [
     CalendarService,
     UserService,
     VisitService,
-    APIService
+    APIService,
+    MedicineService
   ],
   bootstrap: [AppComponent]
 })

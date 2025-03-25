@@ -67,3 +67,15 @@ export interface MedicalAppointment {
     start: string
     end: string
 }
+
+export interface MedicineDisplay {
+    name: string
+    med_id: string
+    taken: string
+}
+
+export interface MedicineSchedule {
+    morning: MedicineDisplay[]
+    afternoon: MedicineDisplay[]
+    night: MedicineDisplay[]
+}
