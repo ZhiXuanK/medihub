@@ -5,6 +5,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { IftaLabelModule } from 'primeng/iftalabel';
 import { ButtonModule } from 'primeng/button';
 import { DropdownModule } from 'primeng/dropdown';
+import { TabMenuModule } from 'primeng/tabmenu';
 
 
 @NgModule({
@@ -12,7 +13,8 @@ import { DropdownModule } from 'primeng/dropdown';
         InputTextModule,
         IftaLabelModule,
         ButtonModule,
-        DropdownModule
+        DropdownModule,
+        TabMenuModule
     ]
 })
 

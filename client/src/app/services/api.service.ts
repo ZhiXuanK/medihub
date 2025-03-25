@@ -14,10 +14,11 @@ export class APIService {
 
     async retrieveApiKeys():Promise<void>{
 
-
         await firstValueFrom(this.http.get<ApiKey>('/api/key/maps')).then(resp => this.mapsApiKey = resp.apikey)
         await firstValueFrom(this.http.get<ApiKey>('/api/key/cal')).then(resp => this.calApiKey = resp.apikey)
 
+        console.log("maps: ", this.mapsApiKey)
+        console.log("cal: ", this.calApiKey);
     }
 
 }
