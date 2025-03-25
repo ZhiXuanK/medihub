@@ -173,44 +173,63 @@
                     @else {
                     <div formArrayName="drug_allergies">
                         @for (drug of drugAlgy.controls; let idx = $index; track drug) {
-                        <div [formGroupName]="idx">
-                            {{idx}}<input type="text" formControlName="drug"
-                                [ngClass]="{'is-valid': validCtrl(drug, 'affected_member')}">
-                            <select name="severity" formControlName="severity">
+                        <div [formGroupName]="idx" class="even-row">
+                            {{idx + 1}}
+                            <p-ifta-label>
+                                <label for="drug">Medicine Name</label>
+                                <input pInputText type="text" formControlName="drug"
+                                    [ngClass]="{'is-valid': validCtrl(drug, 'drug')}">
+                            </p-ifta-label>
+                            <p-dropdown formControlName="severity" [options]="severityTypes" placeholder="Level of Severity" />
+                            <p-button icon="pi pi-times" type="button" (click)="delDrugAlgy(idx)" />
+                            <!-- <select name="severity" formControlName="severity">
                                 <option value="mild">mild</option>
                                 <option value="moderate">moderate</option>
                                 <option value="severe">severe</option>
-                            </select>
+                            </select> -->
                         </div>
-                        <button type="button" (click)="delDrugAlgy(idx)">X</button>
                         }
                     </div>
                     }
             </div>
 
             <div>
-                <h5>Ongoing Treatment:</h5>
-                <button type="button" (click)="addTreatments()">Add Ongoing Treatments</button>
+                <div class="even-row">
+                    <h5>Ongoing Treatment:</h5>
+                    <p-button icon="pi pi-plus" type="button" (click)="addTreatments()" />
+                </div>
+
                 @if (treatments.controls.length <= 0) { <h4>No ongoing treatments recorded</h4>
                     }
                     @else {
                     <div formArrayName="ongoing_treatments">
                         @for (treatment of treatments.controls; let idx = $index; track treatment) {
-                        <div [formGroupName]="idx">
-                            {{idx}}<input type="text" formControlName="treatment"
+                        <div [formGroupName]="idx" class="even-row">
+                            {{idx + 1}}
+                            <p-ifta-label>
+                                <label for="treatment">Type of Treatment</label>
+                                <input pInputText type="text" formControlName="treatment"
                                 [ngClass]="{'is-valid': validCtrl(treatment, 'treatment')}">
-                            <input type="text" formControlName="illness"
+                            </p-ifta-label>
+                            <p-ifta-label>
+                                <label for="illness">Type of Illness</label>
+                                <input pInputText type="text" formControlName="illness"
                                 [ngClass]="{'is-valid': validCtrl(treatment, 'illness')}">
-                            <input type="date" formControlName="start_date"
+                            </p-ifta-label>
+                            <p-ifta-label>
+                                <label for="start_date">Treatment Start Date</label>
+                                <input pInputText type="date" formControlName="start_date"
                                 [ngClass]="{'is-valid': validCtrl(treatment, 'start_date')}">
+                            </p-ifta-label>
+                            <p-button icon="pi pi-times" type="button" (click)="delTreatment(idx)" />
                         </div>
-                        <button type="button" (click)="delTreatment(idx)">X</button>
                         }
                     </div>
                     }
             </div>
-
-            <button type="submit" [disabled]="medProfile.invalid">submit form</button>
+            <div style="text-align: right;">
+                <p-button type="submit" [disabled]="medProfile.invalid">Submit</p-button>
+            </div>
         </form>
     </div>
 </div>

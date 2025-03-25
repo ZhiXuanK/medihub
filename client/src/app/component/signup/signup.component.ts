@@ -20,7 +20,7 @@ export class SignupComponent {
   private activatedRoute = inject(ActivatedRoute)
 
   uid: string = ""
-  registered:boolean = true
+  registered:boolean = false
   
   medProfile !: FormGroup
   pastConds !: FormArray
@@ -34,6 +34,7 @@ export class SignupComponent {
   errorMessage: string = ''
 
   bloodTypes = ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-']
+  severityTypes = ['mild', 'moderate', 'severe']
 
 
   //Minimum eight characters, at least one letter and one number:

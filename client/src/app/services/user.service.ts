@@ -25,7 +25,7 @@ export class UserService {
     }
 
     saveProfile(medProfile: MedicalProfileDetails): void {
-        firstValueFrom(this.http.post<MedicalProfileDetails>('/api/user/saveprofile', medProfile)).then(res =>{console.log(res)})
+        firstValueFrom(this.http.post<MedicalProfileDetails>('/api/user/saveprofile', medProfile))
     }
 
     retrieveProfile():Promise<MedicalProfileDetails>{
