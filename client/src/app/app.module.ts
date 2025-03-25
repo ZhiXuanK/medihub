@@ -12,7 +12,7 @@ import { providePrimeNG } from 'primeng/config';
 import Aura from '@primeng/themes/aura'
 
 //internal
-import { environment } from '../environments/environment';
+import { environment } from './environments/environment';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './component/login/login.component';
 import { SignupComponent } from './component/signup/signup.component';
