@@ -1,7 +1,39 @@
 
 /*table*/
 
+.table-container {
+    width:90%;
+    overflow-x: auto;
+    background-color: white;
+    border-radius: 8px;
+    margin: 5% ;
+
+}
+
 .responsive-table {
     width: 100%;
     border-collapse: collapse;
+}
+
+.responsive-table td {
+    padding: 12px 15px;
+    justify-content: left;
+    text-align: left;
+}
+
+
+@media screen and (max-width: 600px) {
+    .table-container{
+        overflow-x: auto;
+    }
+
+    .responsive-table {
+        min-width: 500px;
+    }
+
+    .responsive-table td {
+        display: block;
+        text-align: right;
+    }
+
 }

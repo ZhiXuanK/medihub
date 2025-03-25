@@ -1,21 +1,26 @@
 @if (!isEditing) {
-<div class="content-card">
+<div class="table-container">
     <h1 style="text-align: center;">Medical Profile</h1>
 
-    <table>
+    <table class="responsive-table">
+        <thead>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </thead>
         <tr>
-            <td>Name: </td>
-            <td colspan="3"> {{profile.name}} </td>
-        </tr>
-        <tr>
-            <td>Blood Type:</td>
-            <td>
+            <td colspan="1">Name: </td>
+            <td colspan="2"> {{profile.name}} </td>
+            <td colspan="1">Blood Type:</td>
+            <td colspan="2">
                 {{profile.blood_type}}
             </td>
         </tr>
+
         <tr>
             <td>Past conditions: </td>
-            <td>
+            <td colspan="2">
                 <ul>
                     @for (cond of profile.past_conditions; track $index) {
                     <li>
@@ -24,10 +29,8 @@
                     }
                 </ul>
             </td>
-        </tr>
-        <tr>
             <td>Current conditions: </td>
-            <td>
+            <td colspan="2">
                 <ul>
                     @for (cond of profile.current_conditions; track $index) {
                     <li>
@@ -36,6 +39,9 @@
                     }
                 </ul>
             </td>
+        </tr>
+        <tr>
+
         </tr>
         <tr>
             <td>Family History: </td>
@@ -48,8 +54,6 @@
                     }
                 </ul>
             </td>
-        </tr>
-        <tr>
             <td>Drug Allergy: </td>
             <td>
                 <ul>
@@ -60,6 +64,9 @@
                     }
                 </ul>
             </td>
+        </tr>
+        <tr>
+
         </tr>
         <tr>
             <td>Ongoing Treatments: </td>
@@ -75,7 +82,9 @@
         </tr>
     </table>
 
-    <button type="button" (click)="edit()">Edit</button>
+    <div class="row" styles="">
+        <p-button [rounded]="true" type="button" (click)="edit()">EDIT</p-button>
+    </div>
 
 </div>
 }
