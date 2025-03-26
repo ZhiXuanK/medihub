@@ -1,5 +1,7 @@
 package vttp.finalproject.medihub.server.service;
 
+import static vttp.finalproject.medihub.server.Utils.stringToDate;
+
 import java.text.ParseException;
 import java.util.List;
 import java.util.Map;
@@ -23,6 +25,21 @@ public class MedicineService {
     @Autowired
     private MedicineRepository medRepo;
 
+    public void updateMedicine(JsonObject obj) throws ParseException{
+
+        Medicine medicine = new Medicine(
+            obj.getString("med_id"),
+            obj.getString("visit_id"),
+            obj.getString("name"),
+            stringToDate(obj.getString("start_date")),
+            stringToDate(obj.getString("end_date")),
+            obj.getInt("dosage"),
+            obj.getJsonArray("timing").toString()
+        );
+
+        medRepo.updateMedicine(medicine);
+
+    }
 
     public List<Medicine> getMedicinesByUser(String userid){
         return medRepo.retrieveMedicineByUser(userid);

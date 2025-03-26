@@ -18,6 +18,7 @@ import jakarta.json.Json;
 import jakarta.json.JsonArray;
 import jakarta.json.JsonObject;
 import jakarta.json.JsonReader;
+import vttp.finalproject.medihub.server.service.MedicineService;
 import vttp.finalproject.medihub.server.service.RecordService;
 import vttp.finalproject.medihub.server.service.VisitService;
 
@@ -30,6 +31,9 @@ public class RecordController {
 
     @Autowired
     private VisitService visitSvc;
+
+    @Autowired
+    private MedicineService medSvc;
     
     //add a new visit into mongodb
     @PostMapping("/addvisit")
@@ -48,6 +52,16 @@ public class RecordController {
         JsonReader reader = Json.createReader(new StringReader(payload));
         JsonObject obj = reader.readObject();
         visitSvc.updateVisit(obj);
+        return ResponseEntity.ok("");
+    }
+
+    @PutMapping("/updatemedicine")
+    public ResponseEntity<String> updateMedicine(
+        @RequestBody String payload
+    ) throws ParseException{
+        JsonReader reader = Json.createReader(new StringReader(payload));
+        JsonObject obj = reader.readObject();
+        medSvc.updateMedicine(obj);
         return ResponseEntity.ok("");
     }
 

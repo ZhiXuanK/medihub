@@ -9,75 +9,93 @@
             <th></th>
             <th></th>
         </thead>
-        <tr>
-            <td>Name: </td>
-            <td colspan="2"> {{profile.name}} </td>
-            <td>Blood Type:</td>
-            <td colspan="2">
-                {{profile.blood_type}}
-            </td>
-        </tr>
-
-        <tr>
-            <td>Past conditions: </td>
-            <td colspan="2">
-                <ul>
-                    @for (cond of profile.past_conditions; track $index) {
-                    <li>
-                        {{cond.condition}}
-                    </li>
-                    }
-                </ul>
-            </td>
-            <td>Current conditions: </td>
-            <td colspan="2">
-                <ul>
-                    @for (cond of profile.current_conditions; track $index) {
-                    <li>
-                        {{cond.condition}}
-                    </li>
-                    }
-                </ul>
-            </td>
-        </tr>
-        <tr>
-
-        </tr>
-        <tr>
-            <td>Family History: </td>
-            <td colspan="2">
-                <ul>
-                    @for (hist of profile.family_history; track $index) {
-                    <li>
-                        {{hist.affected_member}} ({{hist.condition}})
-                    </li>
-                    }
-                </ul>
-            </td>
-            <td>Drug Allergy: </td>
-            <td colspan="2">
-                <ul>
-                    @for (allergy of profile.drug_allergies; track $index) {
-                    <li>
-                        {{allergy.drug}} ({{allergy.severity}})
-                    </li>
-                    }
-                </ul>
-            </td>
-        </tr>
-
-        <tr>
-            <td>Ongoing Treatments: </td>
-            <td colspan="5">
-                <ul>
-                    @for (treat of profile.ongoing_treatments; track $index) {
-                    <li>
-                        {{treat.treatment}} --- {{treat.illness}} --- {{treat.start_date}}
-                    </li>
-                    }
-                </ul>
-            </td>
-        </tr>
+        <tbody style="text-align: center;">
+            <tr>
+                <td>Name: </td>
+                <td colspan="2"> 
+                    <ul>
+                        <li>
+                            {{profile.name}} 
+                        </li>
+                    </ul>
+                </td>
+    
+            </tr>
+            <tr>
+                <td>Blood Type:</td>
+                <td colspan="2">
+                    <ul>
+                        <li>
+                            {{profile.blood_type}}
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+    
+            <tr>
+                <td>Past conditions: </td>
+                <td colspan="2">
+                    <ul>
+                        @for (cond of profile.past_conditions; track $index) {
+                        <li>
+                            {{cond.condition}}
+                        </li>
+                        }
+                    </ul>
+                </td>
+    
+            </tr>
+            <tr>
+                <td>Current conditions: </td>
+                <td colspan="2">
+                    <ul>
+                        @for (cond of profile.current_conditions; track $index) {
+                        <li>
+                            {{cond.condition}}
+                        </li>
+                        }
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <td>Family History: </td>
+                <td colspan="2">
+                    <ul>
+                        @for (hist of profile.family_history; track $index) {
+                        <li>
+                            {{hist.affected_member}} ({{hist.condition}})
+                        </li>
+                        }
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <td>Drug Allergy: </td>
+                <td colspan="2">
+                    <ul>
+                        @for (allergy of profile.drug_allergies; track $index) {
+                        <li>
+                            {{allergy.drug}} ({{allergy.severity}})
+                        </li>
+                        }
+                    </ul>
+                </td>
+            </tr>
+    
+            <tr>
+                <td>Ongoing Treatments: </td>
+                <td colspan="5">
+                    <ul>
+                        @for (treat of profile.ongoing_treatments; track $index) {
+                        <li>
+                            {{treat.treatment}} for {{treat.illness}} from {{treat.start_date}}
+                        </li>
+                        }
+                    </ul>
+                </td>
+            </tr>
+        </tbody>
+        
     </table>
 
     <div class="content-row" style="justify-content: flex-end;">
@@ -134,7 +152,7 @@
                             <p-ifta-label>
                                 <label for="condition">Past Condition</label>
                                 <input pInputText type="text" formControlName="condition"
-                                [ngClass]="{'is-valid': validCtrl(cond, 'condition')}">
+                                    [ngClass]="{'is-valid': validCtrl(cond, 'condition')}">
                             </p-ifta-label>
                             <p-button label="DEL" type="button" (click)="delPastConds(idx)" />
                         </div>
@@ -146,7 +164,7 @@
             <div>
                 <div class="even-row">
                     <h5>Current Medical Conditions</h5>
-                    <p-button label="ADD" type="button" (click)="addCurrConds()"/>
+                    <p-button label="ADD" type="button" (click)="addCurrConds()" />
                 </div>
 
                 @if (currConds.controls.length <= 0) { <h4>No current conditions recorded</h4>
@@ -154,14 +172,14 @@
                     @else {
                     <div formArrayName="current_conditions">
                         @for (cond of currConds.controls; let idx = $index; track cond) {
-                            <div [formGroupName]="idx" class="even-row">
-                                <p-ifta-label>
-                                    <label for="condition">Current Condition</label>
-                                    <input pInputText type="text" formControlName="condition"
+                        <div [formGroupName]="idx" class="even-row">
+                            <p-ifta-label>
+                                <label for="condition">Current Condition</label>
+                                <input pInputText type="text" formControlName="condition"
                                     [ngClass]="{'is-valid': validCtrl(cond, 'condition')}">
-                                </p-ifta-label>
-                                <p-button label="DEL" type="button" (click)="delCurrConds(idx)" />
-                            </div>
+                            </p-ifta-label>
+                            <p-button label="DEL" type="button" (click)="delCurrConds(idx)" />
+                        </div>
                         }
                     </div>
                     }
@@ -178,20 +196,20 @@
                     @else {
                     <div formArrayName="family_history">
                         @for (hist of famHist.controls; let idx = $index; track hist) {
-                            <div [formGroupName]="idx" class="even-row">
-                                {{idx + 1}}
-                                <p-ifta-label>
-                                    <label for="affected_member">Affected Family Member</label>
-                                    <input pInputText type="text" formControlName="affected_member"
-                                        [ngClass]="{'is-valid': validCtrl(hist, 'affected_member')}">
-                                    </p-ifta-label>
-                                    <p-ifta-label>
-                                        <label for="condition">Condition</label>
-                                        <input pInputText type="text" formControlName="condition"
-                                            [ngClass]="{'is-valid': validCtrl(hist, 'condition')}">
-                                    </p-ifta-label>
-                                <p-button label="DEL" type="button" (click)="delFamHist(idx)" />
-                            </div>
+                        <div [formGroupName]="idx" class="even-row">
+                            {{idx + 1}}
+                            <p-ifta-label>
+                                <label for="affected_member">Affected Family Member</label>
+                                <input pInputText type="text" formControlName="affected_member"
+                                    [ngClass]="{'is-valid': validCtrl(hist, 'affected_member')}">
+                            </p-ifta-label>
+                            <p-ifta-label>
+                                <label for="condition">Condition</label>
+                                <input pInputText type="text" formControlName="condition"
+                                    [ngClass]="{'is-valid': validCtrl(hist, 'condition')}">
+                            </p-ifta-label>
+                            <p-button label="DEL" type="button" (click)="delFamHist(idx)" />
+                        </div>
                         }
                     </div>
                     }
@@ -207,21 +225,22 @@
                     @else {
                     <div formArrayName="drug_allergies">
                         @for (drug of drugAlgy.controls; let idx = $index; track drug) {
-                            <div [formGroupName]="idx" class="even-row">
-                                {{idx + 1}}
-                                <p-ifta-label>
-                                    <label for="drug">Medicine Name</label>
-                                    <input pInputText type="text" formControlName="drug"
-                                        [ngClass]="{'is-valid': validCtrl(drug, 'drug')}">
-                                </p-ifta-label>
-                                <p-dropdown formControlName="severity" [options]="severityTypes" placeholder="Level of Severity" />
-                                <p-button label="DEL" type="button" (click)="delDrugAlgy(idx)" />
-                                <!-- <select name="severity" formControlName="severity">
+                        <div [formGroupName]="idx" class="even-row">
+                            {{idx + 1}}
+                            <p-ifta-label>
+                                <label for="drug">Medicine Name</label>
+                                <input pInputText type="text" formControlName="drug"
+                                    [ngClass]="{'is-valid': validCtrl(drug, 'drug')}">
+                            </p-ifta-label>
+                            <p-dropdown formControlName="severity" [options]="severityTypes"
+                                placeholder="Level of Severity" />
+                            <p-button label="DEL" type="button" (click)="delDrugAlgy(idx)" />
+                            <!-- <select name="severity" formControlName="severity">
                                     <option value="mild">mild</option>
                                     <option value="moderate">moderate</option>
                                     <option value="severe">severe</option>
                                 </select> -->
-                            </div>
+                        </div>
                         }
                     </div>
                     }
@@ -237,25 +256,25 @@
                     @else {
                     <div formArrayName="ongoing_treatments">
                         @for (treatment of treatments.controls; let idx = $index; track treatment) {
-                            <div [formGroupName]="idx" class="even-row">
-                                {{idx + 1}}
-                                <p-ifta-label>
-                                    <label for="treatment">Type of Treatment</label>
-                                    <input pInputText type="text" formControlName="treatment"
+                        <div [formGroupName]="idx" class="even-row">
+                            {{idx + 1}}
+                            <p-ifta-label>
+                                <label for="treatment">Type of Treatment</label>
+                                <input pInputText type="text" formControlName="treatment"
                                     [ngClass]="{'is-valid': validCtrl(treatment, 'treatment')}">
-                                </p-ifta-label>
-                                <p-ifta-label>
-                                    <label for="illness">Type of Illness</label>
-                                    <input pInputText type="text" formControlName="illness"
+                            </p-ifta-label>
+                            <p-ifta-label>
+                                <label for="illness">Type of Illness</label>
+                                <input pInputText type="text" formControlName="illness"
                                     [ngClass]="{'is-valid': validCtrl(treatment, 'illness')}">
-                                </p-ifta-label>
-                                <p-ifta-label>
-                                    <label for="start_date">Treatment Start Date</label>
-                                    <input pInputText type="date" formControlName="start_date"
+                            </p-ifta-label>
+                            <p-ifta-label>
+                                <label for="start_date">Treatment Start Date</label>
+                                <input pInputText type="date" formControlName="start_date"
                                     [ngClass]="{'is-valid': validCtrl(treatment, 'start_date')}">
-                                </p-ifta-label>
-                                <p-button label="DEL" type="button" (click)="delTreatment(idx)" />
-                            </div>
+                            </p-ifta-label>
+                            <p-button label="DEL" type="button" (click)="delTreatment(idx)" />
+                        </div>
                         }
                     </div>
                     }

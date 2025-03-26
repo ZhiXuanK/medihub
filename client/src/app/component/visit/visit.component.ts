@@ -34,11 +34,11 @@ export class VisitComponent {
 
   async ngOnInit(): Promise<void> {
 
-    if (this.activatedRoute.snapshot.paramMap.has('visitid')){
-      this.visitid = this.activatedRoute.snapshot.paramMap.get('visitid')!
-      const visit = await this.visitSvc.retrieveRecord(this.visitid)
-      this.visit = visit
-    }
+    // if (this.activatedRoute.snapshot.paramMap.has('visitid')){
+    //   this.visitid = this.activatedRoute.snapshot.paramMap.get('visitid')!
+    //   const visit = await this.visitSvc.retrieveRecord(this.visitid)
+    //   this.visit = visit
+    // }
 
     this.uid = await this.authSvc.getCurrentUserId$();
     this.visitDetails = this.createVisitDetails()
@@ -90,33 +90,33 @@ export class VisitComponent {
 
   private createVisitDetails():FormGroup {
 
-    if (this.visitid){
-      //if editing visit
-      return this.fb.group({
-        visit_id: this.fb.control<string>(this.visit.visit_id, [Validators.required]),
-        user_id: this.fb.control<string>(this.visit.user_id),
-        doctor: this.fb.control<string>(this.visit.doctor, [Validators.required, Validators.minLength(3)]),
-        visit_date: this.fb.control<string>(this.visit.visit_date, [Validators.required]),
-        purpose: this.fb.control<string>(this.visit.purpose, [Validators.required, Validators.minLength(1)]),
-        notes: this.fb.control<string>(this.visit.notes, [Validators.required, Validators.minLength(1)]),
-        medicine: this.fb.array(
-          this.visit.medicine.map( (med: {
-            visit_id: any; timing: any; med_id: any; name: any; active_ingredients: any; start_date: any; end_date: any; dosage: any; 
-          }) => 
-            this.fb.group({
-              med_id: [med.med_id, [Validators.required]],
-              visit_id: [med.visit_id],
-              name: [med.name, [Validators.required, Validators.minLength(3)]],
-              // active_ingredients: [med.active_ingredients, [Validators.required]],
-              start_date: [med.start_date, [Validators.required]],
-              end_date: [med.end_date, [Validators.required]],
-              dosage: [med.dosage, [Validators.required, Validators.min(1)]],
-              timing: [med.timing, [Validators.required, Validators.min(1)]]
-            })
-          )
-        )
-      })
-    } 
+    // if (this.visitid){
+    //   //if editing visit
+    //   return this.fb.group({
+    //     visit_id: this.fb.control<string>(this.visit.visit_id, [Validators.required]),
+    //     user_id: this.fb.control<string>(this.visit.user_id),
+    //     doctor: this.fb.control<string>(this.visit.doctor, [Validators.required, Validators.minLength(3)]),
+    //     visit_date: this.fb.control<string>(this.visit.visit_date, [Validators.required]),
+    //     purpose: this.fb.control<string>(this.visit.purpose, [Validators.required, Validators.minLength(1)]),
+    //     notes: this.fb.control<string>(this.visit.notes, [Validators.required, Validators.minLength(1)]),
+    //     medicine: this.fb.array(
+    //       this.visit.medicine.map( (med: {
+    //         visit_id: any; timing: any; med_id: any; name: any; active_ingredients: any; start_date: any; end_date: any; dosage: any; 
+    //       }) => 
+    //         this.fb.group({
+    //           med_id: [med.med_id, [Validators.required]],
+    //           visit_id: [med.visit_id],
+    //           name: [med.name, [Validators.required, Validators.minLength(3)]],
+    //           // active_ingredients: [med.active_ingredients, [Validators.required]],
+    //           start_date: [med.start_date, [Validators.required]],
+    //           end_date: [med.end_date, [Validators.required]],
+    //           dosage: [med.dosage, [Validators.required, Validators.min(1)]],
+    //           timing: [med.timing, [Validators.required, Validators.min(1)]]
+    //         })
+    //       )
+    //     )
+    //   })
+    // } 
 
     //if new visit
     return this.fb.group({

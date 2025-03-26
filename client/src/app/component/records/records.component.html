@@ -1,19 +1,14 @@
 @if(!editingVisit && !editingMed){
-    <div class="content-row">
-        <div style="margin-left: auto;">
-            <p-button label="Add New Record" [rounded]="true" (onClick)="addNewRecord()"/>
-        </div>
+<div class="content-row">
+    <div style="margin-left: auto;">
+        <p-button label="Add New Record" [rounded]="true" (onClick)="addNewRecord()" />
     </div>
-    
-    <div class="content-row">
-        <div class="content-card">
-            <p-table
-            [value]="visits"
-            [paginator]="true"
-            [rows]="5"
-            [tableStyle]="{ 'min-width': '50rem' }"
-            [rowsPerPageOptions]="[5, 10, 20]"
-        >
+</div>
+
+<div class="content-row">
+    <div class="content-card">
+        <p-table [value]="visits" [paginator]="true" [rows]="5" [tableStyle]="{ 'min-width': '50rem' }"
+            [rowsPerPageOptions]="[5, 10, 20]">
             <ng-template #header>
                 <tr>
                     <th colspan="5" style="text-align: center;">
@@ -43,25 +38,20 @@
                         {{visit.notes}}
                     </td>
                     <td>
-                        <p-button label="EDIT" [rounded]="true" (onClick)="editVisit(visit)"/>
+                        <p-button label="EDIT" [rounded]="true" (onClick)="editVisit(visit)" />
                     </td>
                 </tr>
             </ng-template>
         </p-table>
-        </div>
     </div>
-    
-    
-    
-    <div class="content-row">
-        <div class="content-card">
-            <p-table
-            [value]="medicines"
-            [paginator]="true"
-            [rows]="5"
-            [tableStyle]="{ 'min-width': '50rem' }"
-            [rowsPerPageOptions]="[5, 10, 20]"
-        >
+</div>
+
+
+
+<div class="content-row">
+    <div class="content-card">
+        <p-table [value]="medicines" [paginator]="true" [rows]="5" [tableStyle]="{ 'min-width': '50rem' }"
+            [rowsPerPageOptions]="[5, 10, 20]">
             <ng-template #header>
                 <tr>
                     <th colspan="6" style="text-align: center;">
@@ -69,11 +59,10 @@
                     </th>
                 </tr>
                 <tr>
-                    <th style="width:23%">Name</th>
-                    <th style="width:23%">Start Date</th>
-                    <th style="width:23%">End Date</th>
-                    <th style="width:23%">Dosage</th>
-                    <th style="width:4%"></th>
+                    <th style="width:24%">Name</th>
+                    <th style="width:24%">Start Date</th>
+                    <th style="width:24%">End Date</th>
+                    <th style="width:24%">Dosage</th>
                     <th style="width:4%"></th>
                 </tr>
             </ng-template>
@@ -92,77 +81,137 @@
                         {{medicine.dosage}}
                     </td>
                     <td>
-                        <p-button label="EDIT" [rounded]="true"/>
-                    </td>
-                    <td>
-                        <p-button label="DEL" [rounded]="true" />
+                        <p-button label="EDIT" [rounded]="true" (onClick)="editMedicine(medicine)" />
                     </td>
                 </tr>
             </ng-template>
         </p-table>
-        </div>
     </div>
+</div>
 }
 
 
 @if (editingVisit){
-    <div class="form-container">
-        <div class="form-card">
-            <form *ngIf="currentEditVisit" [formGroup]="currentEditVisit" (submit)="processVisitForm()">
-    
-                <div>
-                    <input type="hidden" formControlName="visit_id" readonly>
-                </div>
-    
-                <div>
-                    <input type="hidden" formControlName="user_id" readonly>
-                </div>
-    
+<div class="form-container">
+    <div class="form-card">
+        <form *ngIf="currentEditVisit" [formGroup]="currentEditVisit" (submit)="processVisitForm()">
+
+            <div>
+                <input type="hidden" formControlName="visit_id" readonly>
+            </div>
+
+            <div>
+                <input type="hidden" formControlName="user_id" readonly>
+            </div>
+
+            <div>
+                <p-ifta-label>
+                    <label for="doctor">Doctor </label>
+                    <input pInputText type="text" formControlName="doctor" readonly>
+                </p-ifta-label>
+            </div>
+
+            <div class="even-row">
                 <div>
                     <p-ifta-label>
-                        <label for="doctor">Doctor </label>
-                        <input pInputText type="text" formControlName="doctor" readonly>
+                        <label for="purpose">Purpose of visit </label>
+                        <input pInputText type="purpose" formControlName="purpose">
                     </p-ifta-label>
-                </div>
-    
-                <div class="even-row">
-                    <div>
-                        <p-ifta-label>
-                            <label for="purpose">Purpose of visit </label>
-                            <input pInputText type="purpose" formControlName="purpose">
-                        </p-ifta-label>
-                        <small *ngIf="currentEditVisit.get('purpose')?.invalid && currentEditVisit.get('purpose')?.touched"
+                    <small *ngIf="currentEditVisit.get('purpose')?.invalid && currentEditVisit.get('purpose')?.touched"
                         class="p-error">
                         Please enter your purpose for visiting
                     </small>
-                    </div>
-    
-                    <div>
-                        <label for="visit_date">Visit Date </label>
-                        <p-datepicker dateFormat="yy.mm.dd" formControlName="visit_date"/>
-                        <small *ngIf="currentEditVisit.get('visit_date')?.invalid && currentEditVisit.get('visit_date')?.touched"
-                            class="p-error">
-                            Please select a visit date.
-                        </small>
-                    </div>
                 </div>
-    
-                <div class="even-row">
-                    <p-floatlabel variant="in">
-                        <textarea pTextarea pSize="large" formControlName="notes"></textarea>
-                        <label for="notes">Notes </label>
-                    </p-floatlabel>
-                    <small *ngIf="currentEditVisit.get('notes')?.invalid && currentEditVisit.get('notes')?.touched"
+
+                <div>
+                    <label for="visit_date">Visit Date </label>
+                    <p-datepicker dateFormat="yy.mm.dd" formControlName="visit_date" />
+                    <small
+                        *ngIf="currentEditVisit.get('visit_date')?.invalid && currentEditVisit.get('visit_date')?.touched"
+                        class="p-error">
+                        Please select a visit date.
+                    </small>
+                </div>
+            </div>
+
+            <div class="even-row">
+                <p-floatlabel variant="in">
+                    <textarea pTextarea pSize="large" formControlName="notes"></textarea>
+                    <label for="notes">Notes </label>
+                </p-floatlabel>
+                <small *ngIf="currentEditVisit.get('notes')?.invalid && currentEditVisit.get('notes')?.touched"
                     class="p-error">
                     Please enter important details from the consult
                 </small>
+            </div>
+
+            <div style="text-align: right;">
+                <p-button type="submit" [disabled]="currentEditVisit.invalid">Submit</p-button>
+            </div>
+
+        </form>
+    </div>
+</div>
+}
+
+@if(editingMed){
+<div class="form-container">
+    <div class="form-card">
+        <form *ngIf="currentEditMed" [formGroup]="currentEditMed" (submit)="processMedicineForm()">
+            <div class="even-row">
+                <div>
+                    Editing: 
+                    <p-ifta-label>
+                        <label for="name">Medicine Name </label>
+                        <input pInputText type="text" formControlName="name" readonly>
+                    </p-ifta-label>
+                </div>
+                <div>
+                    <input type="hidden" formControlName="med_id" readonly>
+                    <input type="hidden" formControlName="visit_id" readonly>
+                </div>
+                <div style="text-align: right;">
+                    <p-button type="submit" [disabled]="currentEditMed.invalid">Submit</p-button>
+                </div>
+            </div>
+
+
+            <!-- <div>
+                        <label for="active_ingredients">Active Ingredients: </label>
+                        <input type="text" formControlName="active_ingredients" [ngClass]="{'is-valid': validCtrl(med, 'active_ingredients')}">
+                    </div> -->
+
+            <div class="even-row">
+                <div>
+                    <label for="start_date">Start Date </label>
+                    <p-datepicker dateFormat="yy.mm.dd" type="date" formControlName="start_date"
+                        [ngClass]="{'is-valid': validCtrl(currentEditMed, 'start_date')}"></p-datepicker>
+                    <small class="error-message"
+                        *ngIf="currentEditMed.get('start_date')?.invalid && currentEditMed.get('start_date')?.touched">Please
+                        enter a start date</small>
                 </div>
 
-                <div style="text-align: right;">
-                    <p-button type="submit" [disabled]="currentEditVisit.invalid">Submit</p-button>
+                <div>
+                    <label for="end_date">End Date </label>
+                    <p-datepicker dateFormat="yy.mm.dd" type="date" formControlName="end_date"
+                        [ngClass]="{'is-valid': validCtrl(currentEditMed, 'end_date')}"></p-datepicker>
+                    <small class="error-message"
+                        *ngIf="currentEditMed.get('end_date')?.invalid && currentEditMed.get('end_date')?.touched">Please
+                        enter a end date</small>
                 </div>
-    
-            </form>
-        </div>
+
+                <div>
+                    <label for="dosage">Dosage </label>
+                    <p-input-number formControlName="dosage"
+                        [ngClass]="{'is-valid': validCtrl(currentEditMed, 'dosage')}"></p-input-number>
+                    <small class="error-message"
+                        *ngIf="currentEditMed.get('dosage')?.invalid && currentEditMed.get('end_date')?.touched">
+                        Please enter your medicine dosage
+                    </small>
+                </div>
+
+            </div>
+        </form>
     </div>
+</div>
 }

@@ -24,9 +24,11 @@ import static vttp.finalproject.medihub.server.Utils.Q_RETRIEVE_MEDICINE_AFTERNO
 import static vttp.finalproject.medihub.server.Utils.Q_RETRIEVE_MEDICINE_BY_USER;
 import static vttp.finalproject.medihub.server.Utils.Q_RETRIEVE_MEDICINE_MORNING_STRING;
 import static vttp.finalproject.medihub.server.Utils.Q_RETRIEVE_MEDICINE_NIGHT_STRING;
+import static vttp.finalproject.medihub.server.Utils.Q_UPDATE_MEDICINE;
 import static vttp.finalproject.medihub.server.Utils.dateToLong;
 import static vttp.finalproject.medihub.server.Utils.longToDate;
 import vttp.finalproject.medihub.server.models.Medicine;
+import vttp.finalproject.medihub.server.models.Visit;
 
 @Repository
 public class MedicineRepository {
@@ -39,6 +41,10 @@ public class MedicineRepository {
         jdbcTemplate.update(Q_INSERT_MEDICINE, medicine.getMed_id(), medicine.getVisit_id(), medicine.getName(),
                 medicine.getStart_date().getTime(), medicine.getEnd_date().getTime(), medicine.getDosage(),
                 medicine.getTiming());
+    }
+
+    public void updateMedicine(Medicine medicine){
+        jdbcTemplate.update(Q_UPDATE_MEDICINE, medicine.getStart_date().getTime(), medicine.getEnd_date().getTime(), medicine.getDosage(), medicine.getMed_id());
     }
 
     // retrieve medicine based on medicine id

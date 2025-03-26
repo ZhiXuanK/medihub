@@ -78,6 +78,10 @@ public class Utils {
             select med.* from medicine as med inner join visit as v on med.visit_id = v.visit_id where v.user_id=?;
             """;
 
+    public static final String Q_UPDATE_MEDICINE = """
+        UPDATE medicine SET start_date=?, end_date=?, dosage=? WHERE med_id=?
+        """;
+
     //methods
     public static Date stringToDate(String date) throws ParseException{
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");

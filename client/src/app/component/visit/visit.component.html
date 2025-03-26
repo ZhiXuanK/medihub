@@ -68,21 +68,16 @@
                     <div formArrayName="medicine">
                         @for ( med of medicine.controls; let idx=$index; track med){
                         <div [formGroupName]="idx">
-                            <div class="even-row">
-                                <div>
-                                    <p-ifta-label>
+                            <div class="even-row flex:space-between">
+                                <div style="flex: 1;">
                                         <label for="name">Medicine Name </label>
                                         <input pInputText type="text" formControlName="name"
                                             [ngClass]="{'is-valid': validCtrl(med, 'name')}">
-                                    </p-ifta-label>
                                     <small *ngIf="med.get('name')?.invalid && med.get('name')?.touched" class="p-error">
                                         Please enter the medicine name
                                     </small>
                                 </div>
-                                <div>
-                                    <input type="hidden" formControlName="med_id" readonly>
-                                </div>
-                                <div formArrayName="timing" class="timing-container">
+                                <div formArrayName="timing" class="timing-container" style="flex:1">
                                     <label>Timing: </label>
                                     @for (option of timingOptions; track $index) {
                                     <div class="timing-option">
@@ -91,6 +86,12 @@
                                             [id]="option + '_' + idx" [checked]="isTimingSelected(med, option)">
                                     </div>
                                     }
+                                </div>
+                                <div style="flex:1 end;">
+                                    <div>
+                                        <input type="hidden" formControlName="med_id" readonly>
+                                    </div>
+                                    <p-button label="DEL" type="button" (click)="delMedicine(idx)" />
                                 </div>
                             </div>
 

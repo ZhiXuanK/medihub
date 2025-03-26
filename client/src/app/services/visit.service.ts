@@ -9,9 +9,9 @@ export class VisitService {
 
     private http = inject(HttpClient)
 
-    retrieveRecord(visitid: string){
+    // retrieveRecord(visitid: string){
 
-    }
+    // }
 
     retrieveAllVisitsByUser(userid:string):Promise<Visit[]>{
         console.log("userid"+userid)
@@ -23,7 +23,7 @@ export class VisitService {
         firstValueFrom(this.http.post<Visit>('/api/record/addvisit', visit)).then(res =>{console.log(res)})
     }
 
-    updateVisit(visit:Visit){
-        firstValueFrom(this.http.put<Visit>('/api/record/updatevisit', visit)).then(res => console.log(res))
+    updateVisit(visit:Visit):Promise<void>{
+        return firstValueFrom(this.http.put<Visit>('/api/record/updatevisit', visit)).then(res => console.log(res))
     }
 }
