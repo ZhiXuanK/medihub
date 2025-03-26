@@ -24,9 +24,23 @@ table, th, td {
     text-align: center;
 }
 
+.router-outlet{
+    height:75vh;
+    margin: 2px;
+}
+
 
 
 /* Specific Elements */
+.header-text{
+    font-family: "Lato", sans-serif;
+    font-weight: 600;
+    font-size: 2rem;
+    color: #2c3e50;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+}
+
 .p-error {
     font-weight: 300;
     font-style: italic;

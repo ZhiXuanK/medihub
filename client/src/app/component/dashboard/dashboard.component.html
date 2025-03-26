@@ -17,14 +17,14 @@
                          <td>
                               @for (med of mornMeds; track $index) {
                               <div
-                                   style="display: flex; align-items: center; justify-content: flex-start; margin-bottom: 5px;">
+                                   style="display: flex; align-items: center; justify-content: center; margin-bottom: 5px;">
 
                                    @if (med.taken){
                                    <!-- if med taken, display strikethrough med name -->
                                    <s>{{med.name}}</s>
                                    } @else {
-                                   <input type="checkbox" (click)="reduceDosage(med.med_id)"
-                                        style="margin-right: 3px;" />
+                                   <!-- <input type="checkbox" (click)="reduceDosage(med.med_id)"
+                                        style="margin-right: 3px;" /> -->
                                    <span>{{med.name}}</span>
                                    }
                               </div>
@@ -34,13 +34,13 @@
                          <td>
                               @for (med of aftMeds; track $index) {
                               <div
-                                   style="display: flex; align-items: center; justify-content: flex-start; margin-bottom: 5px;">
+                                   style="display: flex; align-items: center; justify-content: center; margin-bottom: 5px;">
                                    @if (med.taken){
                                    <!-- if med taken, display strikethrough med name -->
                                    <s>{{med.name}}</s>
                                    } @else {
-                                   <input type="checkbox" (click)="reduceDosage(med.med_id)"
-                                        style="margin-right: 3px;" />
+                                   <!-- <input type="checkbox" (click)="reduceDosage(med.med_id)"
+                                        style="margin-right: 3px;" /> -->
                                    <span>{{med.name}}</span>
                                    }
                               </div>
@@ -50,14 +50,14 @@
                          <td>
                               @for (med of nightMeds; track $index) {
                               <div
-                                   style="display: flex; align-items: center; justify-content: flex-start; margin-bottom: 5px;">
+                                   style="display: flex; align-items: center; justify-content: center; margin-bottom: 5px;">
 
                                    @if (med.taken){
                                    <!-- if med taken, display strikethrough med name -->
                                    <s>{{med.name}}</s>
                                    } @else {
-                                   <input type="checkbox" (click)="reduceDosage(med.med_id)"
-                                        style="margin-right: 3px;" />
+                                   <!-- <input type="checkbox" (click)="reduceDosage(med.med_id)"
+                                        style="margin-right: 3px;" /> -->
                                    <span>{{med.name}}</span>
                                    }
                               </div>
@@ -154,10 +154,10 @@
                          <h2 style="text-align: center;">My Calendar Events</h2>
                          <div class="even-row">
                               <div style="text-align: left;">
-                                   <p-button type="button" (click)="linkCalendar()">link</p-button>
+                                   <p-button type="button" (click)="linkCalendar()">Link to Google</p-button>
                               </div>
                               <div style="text-align: right;">
-                                   <p-button type="button" (click)="loadAppointments()">create</p-button>
+                                   <p-button type="button" (click)="loadAppointments()">Refresh Cal</p-button>
                               </div>
                          </div>
                          <div>
