@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { AfterContentInit, Component, inject, OnInit } from '@angular/core';
 import { APIService } from '../../services/api.service';
 
 
@@ -17,22 +17,38 @@ declare var google:any
   templateUrl: './map.component.html',
   styleUrl: './map.component.css'
 })
-export class MapComponent implements OnInit{
+export class MapComponent implements OnInit, AfterContentInit{
 
   private apiSvc = inject(APIService)
 
   map!: google.maps.Map;
 
-  userLat !: number
-  userLong !: number
+  // userLat !: number
+  // userLong !: number
 
 
   async ngOnInit(): Promise<void> {
-    await this.apiSvc.retrieveApiKeys()
-    await this.loadGoogleMapsScript()
-    await this.getUserCurrentPosition()
-    await this.initMap()
+    try {
+      await this.loadDependencies();
+    } catch (error){
+      console.log("map error:", error)
+    }
     //await this.nearbySearch()
+  }
+
+  async ngAfterContentInit(): Promise<void> {
+    await this.initMap()
+  }
+
+  private async loadDependencies():Promise<void>{
+    try {
+      await this.apiSvc.retrieveApiKeys()
+      await this.loadGoogleMapsScript()
+      await this.getUserCurrentPosition()
+
+    } catch (error){
+      console.log("map error:", error)
+    }
   }
 
   async loadGoogleMapsScript(): Promise<void> {
@@ -55,17 +71,34 @@ export class MapComponent implements OnInit{
     )
   }
 
-  async getUserCurrentPosition() {
-    await navigator.geolocation.getCurrentPosition(
-      position => {
-        this.userLat = position.coords.latitude
-        this.userLong = position.coords.longitude
-        console.log(this.userLat, this.userLong)
-      },
-      error => {
-        console.error("error getting location: ", error)
-      }
-    )
+  async getUserCurrentPosition(): Promise<{lat:number, long:number}> {
+
+    return new Promise((resolve, reject) => {
+      navigator.geolocation.getCurrentPosition(
+        position => {
+          const userLat = position.coords.latitude
+          const userLong = position.coords.longitude
+          resolve({lat: userLat, long: userLong})
+        }, 
+        error => {
+          const defaultLat = 1.311
+          const defaultLong = 103.844
+          resolve({lat:defaultLat, long: defaultLong})
+        }
+      )
+    })
+    // await navigator.geolocation.getCurrentPosition(
+    //   position => {
+    //     this.userLat = position.coords.latitude
+    //     this.userLong = position.coords.longitude
+    //     console.log(this.userLat, this.userLong)
+    //   },
+    //   error => {
+    //     this.userLat = 1.311
+    //     this.userLong = 103.844
+    //     console.error("error getting location: ", error)
+    //   }
+    // )
   }
 
   async initMap() {
@@ -73,9 +106,11 @@ export class MapComponent implements OnInit{
     const { Place, SearchNearbyRankPreference } = await google.maps.importLibrary('places') as google.maps.PlacesLibrary;
     const { AdvancedMarkerElement } = await google.maps.importLibrary("marker") as google.maps.MarkerLibrary;
 
-    let center = new google.maps.LatLng(this.userLat, this.userLong);
-    console.log("there")
+    const {lat, long} = await this.getUserCurrentPosition()
 
+    // let center = new google.maps.LatLng(this.userLat, this.userLong);
+
+    let center = new google.maps.LatLng(lat, long)
     this.map = new Map(document.getElementById('map') as HTMLElement, {
       center: center,
       zoom: 11,
@@ -88,7 +123,7 @@ export class MapComponent implements OnInit{
         radius: 2500,
       },
       includedPrimaryTypes: ['doctor', 'hospital'],
-      maxResultCount: 5,
+      maxResultCount: 20,
       rankPreference: SearchNearbyRankPreference.POPULARITY,
       language: 'en-US',
       region: 'us',

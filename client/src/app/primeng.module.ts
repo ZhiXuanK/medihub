@@ -13,6 +13,8 @@ import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { CheckboxModule } from 'primeng/checkbox';
 import { ScrollPanelModule } from 'primeng/scrollpanel';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { SplitterModule } from 'primeng/splitter';
 
 
 @NgModule({
@@ -28,7 +30,9 @@ import { ScrollPanelModule } from 'primeng/scrollpanel';
         FloatLabelModule,
         InputNumberModule,
         CheckboxModule,
-        ScrollPanelModule
+        ScrollPanelModule,
+        ProgressSpinnerModule,
+        SplitterModule
     ]
 })
 
