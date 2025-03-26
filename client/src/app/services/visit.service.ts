@@ -22,4 +22,8 @@ export class VisitService {
     addNewVisit(visit:Visit){
         firstValueFrom(this.http.post<Visit>('/api/record/addvisit', visit)).then(res =>{console.log(res)})
     }
+
+    updateVisit(visit:Visit){
+        firstValueFrom(this.http.put<Visit>('/api/record/updatevisit', visit)).then(res => console.log(res))
+    }
 }

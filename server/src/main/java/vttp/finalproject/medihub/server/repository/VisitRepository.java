@@ -28,7 +28,7 @@ public class VisitRepository {
     }
 
     public void updateVisit(Visit visit){
-        jdbcTemplate.update(Q_UPDATE_VISIT, visit.getVisit_date(), visit.getPurpose(), visit.getNotes(), visit.getVisit_id());
+        jdbcTemplate.update(Q_UPDATE_VISIT, visit.getVisit_date().getTime(), visit.getPurpose(), visit.getNotes(), visit.getVisit_id());
     }
 
     public Visit retrieveVisit(String visitid){

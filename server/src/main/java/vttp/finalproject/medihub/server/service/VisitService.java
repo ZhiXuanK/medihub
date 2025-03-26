@@ -23,6 +23,7 @@ public class VisitService {
 
     public void updateVisit(JsonObject obj) throws ParseException{
         Visit visit = new Visit(obj.getString("visit_id"), obj.getString("user_id"), obj.getString("doctor"), stringToDate(obj.getString("visit_date")), obj.getString("purpose"), obj.getString("notes"));
+        visitRepo.updateVisit(visit);
     }
 
 }
