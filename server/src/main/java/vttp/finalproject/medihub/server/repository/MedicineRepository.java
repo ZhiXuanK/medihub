@@ -20,7 +20,10 @@ import static vttp.finalproject.medihub.server.Utils.Q_INSERT_MEDICINE;
 import static vttp.finalproject.medihub.server.Utils.Q_REDUCE_DOSAGE;
 import static vttp.finalproject.medihub.server.Utils.Q_RETRIEVE_LOW_SUPPLY_MEDICINE;
 import static vttp.finalproject.medihub.server.Utils.Q_RETRIEVE_MEDICINE;
-import static vttp.finalproject.medihub.server.Utils.Q_RETRIEVE_MEDICINE_TIME_STRING;
+import static vttp.finalproject.medihub.server.Utils.Q_RETRIEVE_MEDICINE_AFTERNOON_STRING;
+import static vttp.finalproject.medihub.server.Utils.Q_RETRIEVE_MEDICINE_MORNING_STRING;
+import static vttp.finalproject.medihub.server.Utils.Q_RETRIEVE_MEDICINE_NIGHT_STRING;
+import static vttp.finalproject.medihub.server.Utils.dateToLong;
 import static vttp.finalproject.medihub.server.Utils.longToDate;
 import vttp.finalproject.medihub.server.models.Medicine;
 
@@ -54,7 +57,7 @@ public class MedicineRepository {
     }
 
     public void reduceMed(String med_id){
-        jdbcTemplate.queryForRowSet(Q_REDUCE_DOSAGE, med_id);
+        jdbcTemplate.update(Q_REDUCE_DOSAGE, med_id);
     }
 
     // get list of medicine where dosage is less than 5
@@ -83,21 +86,21 @@ public class MedicineRepository {
         List<String> all = new LinkedList<>();
 
         List<String> morning = new LinkedList<>();
-        SqlRowSet rsMorning = jdbcTemplate.queryForRowSet(Q_RETRIEVE_MEDICINE_TIME_STRING, date, "%morning%", uid);
+        SqlRowSet rsMorning = jdbcTemplate.queryForRowSet(Q_RETRIEVE_MEDICINE_MORNING_STRING, date, date, uid);
         while (rsMorning.next()) {
             morning.add(rsMorning.getString("name"));
             all.add(rsMorning.getString("name"));
         }
 
         List<String> afternoon = new LinkedList<>();
-        SqlRowSet rsAfternoon = jdbcTemplate.queryForRowSet(Q_RETRIEVE_MEDICINE_TIME_STRING, date, "%afternoon%", uid);
+        SqlRowSet rsAfternoon = jdbcTemplate.queryForRowSet(Q_RETRIEVE_MEDICINE_AFTERNOON_STRING, date, date, uid);
         while (rsAfternoon.next()) {
             afternoon.add(rsAfternoon.getString("name"));
             all.add(rsAfternoon.getString("name"));
         }
 
         List<String> night = new LinkedList<>();
-        SqlRowSet rsNight = jdbcTemplate.queryForRowSet(Q_RETRIEVE_MEDICINE_TIME_STRING, date, "%night%", uid);
+        SqlRowSet rsNight = jdbcTemplate.queryForRowSet(Q_RETRIEVE_MEDICINE_NIGHT_STRING, date, date, uid);
         while (rsNight.next()) {
             night.add(rsNight.getString("name"));
             all.add(rsNight.getString("name"));
@@ -114,17 +117,19 @@ public class MedicineRepository {
 
     // get list of medicine that needs to be taken today - only name
     public Map<String, List<JsonObject>> getMedicineOfTheDayWithId(String uid) throws ParseException {
+
         String currentDate = new Date().toString();
         SimpleDateFormat sdfInput = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy");
         Date midDate = sdfInput.parse(currentDate);
         SimpleDateFormat sdfOutput = new SimpleDateFormat("yyyy-MM-dd");
-        String date = sdfOutput.format(midDate);
+        Long date = dateToLong(sdfOutput.format(midDate));
         // List<String> all = new LinkedList<>();
 
         List<JsonObject> morning = new LinkedList<>();
-        SqlRowSet rsMorning = jdbcTemplate.queryForRowSet(Q_RETRIEVE_MEDICINE_TIME_STRING, date, "%morning%", uid);
+        final SqlRowSet rsMorning = jdbcTemplate.queryForRowSet(Q_RETRIEVE_MEDICINE_MORNING_STRING, date, date, uid);
         while (rsMorning.next()) {
-            JsonObject obj = Json.createObjectBuilder()
+            JsonObject obj;
+            obj = Json.createObjectBuilder()
                     .add("name", rsMorning.getString("name"))
                     .add("med_id", rsMorning.getString("med_id"))
                     .add("taken", false)
@@ -134,7 +139,7 @@ public class MedicineRepository {
         }
 
         List<JsonObject> afternoon = new LinkedList<>();
-        SqlRowSet rsAfternoon = jdbcTemplate.queryForRowSet(Q_RETRIEVE_MEDICINE_TIME_STRING, date, "%afternoon%", uid);
+        final SqlRowSet rsAfternoon = jdbcTemplate.queryForRowSet(Q_RETRIEVE_MEDICINE_AFTERNOON_STRING, date, date, uid);
         while (rsAfternoon.next()) {
             JsonObject obj = Json.createObjectBuilder()
                     .add("name", rsAfternoon.getString("name"))
@@ -146,7 +151,7 @@ public class MedicineRepository {
         }
 
         List<JsonObject> night = new LinkedList<>();
-        SqlRowSet rsNight = jdbcTemplate.queryForRowSet(Q_RETRIEVE_MEDICINE_TIME_STRING, date, "%night%", uid);
+        final SqlRowSet rsNight = jdbcTemplate.queryForRowSet(Q_RETRIEVE_MEDICINE_NIGHT_STRING, date, date, uid);
         while (rsNight.next()) {
             JsonObject obj = Json.createObjectBuilder()
                     .add("name", rsNight.getString("name"))

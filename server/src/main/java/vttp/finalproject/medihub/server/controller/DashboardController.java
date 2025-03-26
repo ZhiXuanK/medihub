@@ -49,7 +49,9 @@ public class DashboardController {
     public ResponseEntity<String> getMedicineSchedule(
         @PathVariable String uid
     ) throws ParseException{
+        System.out.println("here");
         JsonObject results = medSvc.getMedicineScheduleWithId(uid);
+        System.out.println(results.toString());
 
         return ResponseEntity.ok(results.toString());
     }

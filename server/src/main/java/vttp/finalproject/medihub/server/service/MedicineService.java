@@ -51,6 +51,8 @@ public class MedicineService {
     }
 
     public JsonObject getMedicineScheduleWithId(String uid) throws ParseException{
+        System.out.println("hereherehere");
+
         Map<String, List<JsonObject>> results = medRepo.getMedicineOfTheDayWithId(uid);
 
         JsonArrayBuilder mornBuild = Json.createArrayBuilder();
@@ -73,8 +75,8 @@ public class MedicineService {
 
         JsonObject schedule = Json.createObjectBuilder()
             .add("morning", mornArr)
-            .add("afternoon", aftBuild)
-            .add("night", nightBuild)
+            .add("afternoon", aftArr)
+            .add("night", nightArr)
             .build();
 
         return schedule;

@@ -6,6 +6,7 @@ import { CalendarService } from '../../services/calendar.service';
 import { AuthStore } from '../../stores/auth.store';
 import { checkDateValidator } from '../../validators/validators';
 import { MedicineService } from '../../services/medicine.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -20,6 +21,7 @@ export class DashboardComponent {
   private calSvc = inject(CalendarService)
   private medSvc = inject(MedicineService)
   private authStore = inject(AuthStore)
+  private router = inject(Router)
   authStatus!:boolean
   response!: string|null
 
@@ -35,15 +37,21 @@ export class DashboardComponent {
   nightMeds !: MedicineDisplay[]
 
   async ngOnInit(): Promise<void> {
-    await this.authStore.userId$.subscribe(res => this.uid = res!)
-    this.newAppointment = this.initializeAppointment()
+    await this.authStore.userId$.subscribe(res => {
+      console.log(res)
+      this.uid = res!
+      this.newAppointment = this.initializeAppointment()
+      this.loadMedicineSchedule()
+    })
+
   }
 
   //medicine schedule
   async loadMedicineSchedule():Promise<void>{
-    this.medSvc.retrieveMedicineOfTheDay(this.uid).then(
+    await this.medSvc.retrieveMedicineOfTheDay(this.uid).then(
       res => {
         this.mornMeds = res.morning
+        console.log(this.mornMeds)
         this.aftMeds = res.afternoon
         this.nightMeds = res.night
       }
@@ -52,6 +60,7 @@ export class DashboardComponent {
 
   reduceDosage(med_id:string){
     this.medSvc.reduceDosage(med_id)
+    this.router.navigate(["/dashboard"])
   }
 
   //calendar

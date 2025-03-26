@@ -1,9 +1,8 @@
-
 <div class="content-row">
      <div style="flex: 3;">
           <div class="content-card">
-               <p-table>
-                    <ng-template #header>
+               <table class="styled-table">
+                    <thead>
                          <tr>
                               <th colspan="3">Medicine Schedule</th>
                          </tr>
@@ -12,21 +11,57 @@
                               <th>Afternoon</th>
                               <th>Night</th>
                          </tr>
-                    </ng-template>
-                    <ng-template #body>
+                    </thead>
+
+                    <tbody>
                          <td>
                               @for (med of mornMeds; track $index) {
+                              <div style="display: flex; align-items: center; justify-content: flex-start; margin-bottom: 5px;">
+
                                    @if (med.taken){
-                                        <!-- if med taken, display strikethrough med name -->
-                                        <s>med.name</s>
+                                   <!-- if med taken, display strikethrough med name -->
+                                   <s>{{med.name}}</s>
                                    } @else {
-                                        <p-tableCheckbox (click)="reduceDosage(med.med_id)" />
-                                        <p>med.name</p>
+                                   <input type="checkbox" (click)="reduceDosage(med.med_id)" style="margin-right: 3px;"/>
+                                   <span>{{med.name}}</span>
                                    }
+                              </div>
+
                               }
                          </td>
-                    </ng-template>
-               </p-table>
+                         <td>
+                              @for (med of aftMeds; track $index) {
+                              <div style="display: flex; align-items: center; justify-content: flex-start; margin-bottom: 5px;">
+
+                                   @if (med.taken){
+                                   <!-- if med taken, display strikethrough med name -->
+                                   <s>{{med.name}}</s>
+                                   } @else {
+                                   <input type="checkbox" (click)="reduceDosage(med.med_id)" style="margin-right: 3px;"/>
+                                   <span>{{med.name}}</span>
+                                   }
+                              </div>
+
+                              }
+                         </td>
+                         <td>
+                              @for (med of nightMeds; track $index) {
+                              <div style="display: flex; align-items: center; justify-content: flex-start; margin-bottom: 5px;">
+
+                                   @if (med.taken){
+                                   <!-- if med taken, display strikethrough med name -->
+                                   <s>{{med.name}}</s>
+                                   } @else {
+                                   <input type="checkbox" (click)="reduceDosage(med.med_id)" style="margin-right: 3px;"/>
+                                   <span>{{med.name}}</span>
+                                   }
+                              </div>
+
+                              }
+                         </td>
+                    </tbody>
+
+               </table>
           </div>
      </div>
      <div style="flex: 1;">
@@ -87,5 +122,5 @@
      </li>
 </ul>
 } @else {
-     <h2>no appointments</h2>
+<h2>no appointments</h2>
 }

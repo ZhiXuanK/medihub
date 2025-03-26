@@ -10,7 +10,7 @@ export class MedicineService {
     private http = inject(HttpClient)
 
     retrieveMedicineOfTheDay(uid:string):Promise<MedicineSchedule>{
-        return firstValueFrom(this.http.get<MedicineSchedule>(`api/dashboard/medicineschedule/${uid}`))
+        return firstValueFrom(this.http.get<MedicineSchedule>(`api/dashboard/medicineschedule/${uid}`)).then(res => {console.log(res); return res})
     }
 
     reduceDosage(med_id:string):void{

@@ -44,9 +44,18 @@ public class Utils {
         select med.med_id, med.name, med.dosage, v.user_id from medicine as med inner join visit as v on med.visit_id = v.visit_id where dosage <=5
         """;
 
-    public static final String Q_RETRIEVE_MEDICINE_TIME_STRING = """
-        select med.*, v.user_id from medicine as med inner join visit as v on med.visit_id = v.visit_id where med.start_date <= ? <= med.end_date and med.timing like ? and v.user_id=? and dosage >0
+    public static final String Q_RETRIEVE_MEDICINE_MORNING_STRING = """
+        select med.*, v.user_id from medicine as med inner join visit as v on med.visit_id = v.visit_id where med.start_date <= ? AND med.end_date>=? and med.timing like '%morning%' and v.user_id=? and dosage >0
         """;
+
+    public static final String Q_RETRIEVE_MEDICINE_AFTERNOON_STRING = """
+        select med.*, v.user_id from medicine as med inner join visit as v on med.visit_id = v.visit_id where med.start_date <= ? AND med.end_date>=? and med.timing like '%afternoon%' and v.user_id=? and dosage >0
+        """;
+
+    public static final String Q_RETRIEVE_MEDICINE_NIGHT_STRING = """
+        select med.*, v.user_id from medicine as med inner join visit as v on med.visit_id = v.visit_id where med.start_date <= ? AND med.end_date>=? and med.timing like '%night%' and v.user_id=? and dosage >0
+       """;
+    
 
     public static final String Q_REDUCE_DOSAGE = """
             UPDATE medicine SET dosage=dosage-1 where med_id=?

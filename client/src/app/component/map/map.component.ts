@@ -29,7 +29,6 @@ export class MapComponent implements OnInit{
 
   async ngOnInit(): Promise<void> {
     await this.apiSvc.retrieveApiKeys()
-    console.log(this.apiSvc.mapsApiKey)
     await this.loadGoogleMapsScript()
     await this.getUserCurrentPosition()
     await this.initMap()

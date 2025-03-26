@@ -71,7 +71,7 @@ export interface MedicalAppointment {
 export interface MedicineDisplay {
     name: string
     med_id: string
-    taken: string
+    taken: boolean
 }
 
 export interface MedicineSchedule {
