@@ -1,0 +1,30 @@
+/* Responsive Timing Container */
+.timing-container {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 10px;
+}
+
+@media (max-width: 600px) {
+    .timing-container {
+        flex-wrap: wrap;
+    }
+}
+
+.timing-option {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+
+.error-message {
+    display: block;
+    margin-top: 3px;
+    font-size: 0.85rem;
+    font-weight: 300;
+    color: black;
+    font-family: "Lato", sans-serif;
+    font-style: italic;
+}

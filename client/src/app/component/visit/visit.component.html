@@ -32,76 +32,108 @@
 
                 <div>
                     <label for="visit_date">Visit Date </label>
-                    <p-datepicker dateFormat="yy.mm.dd" formControlName="visit_date" [ngClass]="{'is-valid': valid('visit_date')}" />
-                        <small
-                            *ngIf="visitDetails.get('visit_date')?.invalid && visitDetails.get('visit_date')?.touched"
-                            class="p-error">
-                            Please select a visit date.
-                        </small>
+                    <p-datepicker dateFormat="yy.mm.dd" formControlName="visit_date"
+                        [ngClass]="{'is-valid': valid('visit_date')}" />
+                    <small *ngIf="visitDetails.get('visit_date')?.invalid && visitDetails.get('visit_date')?.touched"
+                        class="p-error">
+                        Please select a visit date.
+                    </small>
                 </div>
             </div>
 
             <div class="even-row">
-                <p-iftalabel>
-                    <label for="notes">Notes: </label>
-                    <textarea pSize="large" formControlName="notes" [ngClass]="{'is-valid': valid('notes')}"></textarea>
-                </p-iftalabel>
+                <p-floatlabel variant="in">
+                    <textarea pTextarea pSize="large" formControlName="notes"
+                        [ngClass]="{'is-valid': valid('notes')}"></textarea>
+                    <label for="notes">Notes </label>
+                </p-floatlabel>
             </div>
 
-            <button type="submit" [disabled]="visitDetails.invalid">Submit</button>
-
             <div>
-                <h5>Medicine Prescribed: </h5>
-                <button type="button" (click)="addMedicine()">Add Medicine</button>
+                <div class="even-row">
+                    <h5>Medicine Prescribed: </h5>
+                    <p-button icon="pi pi-plus" type="button" (click)="addMedicine()" />
+                </div>
+
                 @if (medicine.controls.length <= 0) { <h4>No medicine prescribed</h4>
                     } @else {
                     <div formArrayName="medicine">
                         @for ( med of medicine.controls; let idx=$index; track med){
                         <div [formGroupName]="idx">
-                            <div>
-                                <label for="med_id">Medicine ID: </label>
-                                <input type="text" formControlName="med_id" readonly>
+                            <div class="even-row">
+                                <div>
+                                    <p-ifta-label>
+                                        <label for="name">Medicine Name </label>
+                                        <input pInputText type="text" formControlName="name"
+                                            [ngClass]="{'is-valid': validCtrl(med, 'name')}">
+                                    </p-ifta-label>
+                                    <small *ngIf="med.get('name')?.invalid && med.get('name')?.touched" class="p-error">
+                                        Please enter the medicine name
+                                    </small>
+                                </div>
+                                <div>
+                                    <input type="hidden" formControlName="med_id" readonly>
+                                </div>
+                                <div formArrayName="timing" class="timing-container">
+                                    <label>Timing: </label>
+                                    @for (option of timingOptions; track $index) {
+                                    <div class="timing-option">
+                                        <label [for]="option + '_' + idx">{{option | titlecase}}</label>
+                                        <input type="checkbox" [value]="option" (change)="onTimingChange($event, idx)"
+                                            [id]="option + '_' + idx" [checked]="isTimingSelected(med, option)">
+                                    </div>
+                                    }
+                                </div>
                             </div>
 
-                            <div>
-                                <label for="name">Medicine name: </label>
-                                <input type="text" formControlName="name"
-                                    [ngClass]="{'is-valid': validCtrl(med, 'name')}">
-                            </div>
 
                             <!-- <div>
                                     <label for="active_ingredients">Active Ingredients: </label>
                                     <input type="text" formControlName="active_ingredients" [ngClass]="{'is-valid': validCtrl(med, 'active_ingredients')}">
                                 </div> -->
 
-                            <div>
-                                <label for="start_date">Start Date: </label>
-                                <input type="date" formControlName="start_date"
-                                    [ngClass]="{'is-valid': validCtrl(med, 'start_date')}">
-                            </div>
+                            <div class="even-row">
+                                <div>
+                                    <label for="start_date">Start Date </label>
+                                    <p-datepicker dateFormat="yy.mm.dd" type="date" formControlName="start_date"
+                                        [ngClass]="{'is-valid': validCtrl(med, 'start_date')}"></p-datepicker>
+                                    <small class="error-message"
+                                        *ngIf="med.get('start_date')?.invalid && med.get('start_date')?.touched">Please
+                                        enter a start date</small>
+                                </div>
 
-                            <div>
-                                <label for="end_date">End Date: </label>
-                                <input type="date" formControlName="end_date"
-                                    [ngClass]="{'is-valid': validCtrl(med, 'end_date')}">
-                            </div>
+                                <div>
+                                    <label for="end_date">End Date </label>
+                                    <p-datepicker dateFormat="yy.mm.dd" type="date" formControlName="end_date"
+                                        [ngClass]="{'is-valid': validCtrl(med, 'end_date')}"></p-datepicker>
+                                    <small class="error-message"
+                                        *ngIf="med.get('end_date')?.invalid && med.get('end_date')?.touched">Please
+                                        enter a end date</small>
+                                </div>
 
-                            <div>
-                                <label for="dosage">Dosage: </label>
-                                <input type="number" formControlName="dosage"
-                                    [ngClass]="{'is-valid': validCtrl(med, 'dosage')}">
-                            </div>
-
-                            <div>
-                                <label>Timing: </label>
-                                <div formArrayName="timing">
-                                    @for (option of timingOptions; track $index) {
-                                    <input type="checkbox" [value]="option" (change)="onTimingChange($event, idx)"
-                                        [id]="option + '_' + idx" [checked]="isTimingSelected(med, option)">
-                                    <label [for]="option + '_' + idx">{{option | titlecase}}</label>
-                                    }
+                                <div>
+                                    <label for="dosage">Dosage </label>
+                                    <p-input-number formControlName="dosage"
+                                        [ngClass]="{'is-valid': validCtrl(med, 'dosage')}"></p-input-number>
+                                    <small class="error-message"
+                                        *ngIf="med.get('dosage')?.invalid && med.get('end_date')?.touched">
+                                        Please enter your medicine dosage
+                                    </small>
                                 </div>
                             </div>
+
+                            <!-- <div class="even-row">
+                                <div>
+                                    <div formArrayName="timing" style="display: flex; flex-wrap: nowrap; align-items: center; gap: 10px;">
+                                        <label>Timing: </label>
+                                        @for (option of timingOptions; track $index) {
+                                        <input type="checkbox" [value]="option" (change)="onTimingChange($event, idx)"
+                                            [id]="option + '_' + idx" [checked]="isTimingSelected(med, option)">
+                                        <label [for]="option + '_' + idx">{{option | titlecase}}</label>
+                                        }
+                                    </div>
+                                </div>
+                            </div> -->
 
                             <!-- <div>
                                     <label for="timing">Timing:</label>
@@ -113,9 +145,14 @@
                                     <label for="night">Night</label>
                                 </div> -->
                         </div>
+                        <br>
+                        <hr>
                         }
                     </div>
                     }
+            </div>
+            <div style="text-align: right;">
+                <p-button type="submit" [disabled]="visitDetails.invalid">Submit</p-button>
             </div>
 
         </form>

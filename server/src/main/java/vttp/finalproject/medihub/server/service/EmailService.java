@@ -30,7 +30,7 @@ public class EmailService {
     @Scheduled(cron = "0 0 11 * * *")
     public void sendLowMedicationReminder(){
         Map<String, List<JsonObject>> medicines = medSvc.getLowSupplyMedicineByUser();
-
+        System.out.println("herer");
         for (String key : medicines.keySet()){
             String email = userRepo.retrieveUserEmail(key);
             String nickName = profileRepo.retrieveProfile(key).get().get(0).getString("name");

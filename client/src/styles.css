@@ -100,9 +100,15 @@ input {
 
 .even-row p-ifta-label {
     flex: 1;
-  }
-  
-  /* .even-row p-button {
-    flex: none;
-    margin-left: 4px;
-  } */
+}
+
+.even-row p-floatlabel {
+    width: 100%;
+}
+
+.even-row p-floatlabel textarea {
+    width: 100%;
+    min-height: 75px;
+    padding: 8px; 
+    box-sizing: border-box;
+}

@@ -9,6 +9,9 @@ import { TabMenuModule } from 'primeng/tabmenu';
 import { TableModule } from 'primeng/table';
 import { TextareaModule } from 'primeng/textarea';
 import { DatePickerModule } from 'primeng/datepicker';
+import { FloatLabelModule } from 'primeng/floatlabel';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { CheckboxModule } from 'primeng/checkbox';
 
 
 @NgModule({
@@ -20,7 +23,10 @@ import { DatePickerModule } from 'primeng/datepicker';
         TabMenuModule,
         TableModule,
         TextareaModule,
-        DatePickerModule
+        DatePickerModule,
+        FloatLabelModule,
+        InputNumberModule,
+        CheckboxModule
     ]
 })
 
