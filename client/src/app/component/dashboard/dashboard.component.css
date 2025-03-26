@@ -22,7 +22,7 @@
 }
 
 .content-row {
-    height: 40vh;
+    height: 43vh;
     box-sizing: border-box;
 }
 
@@ -32,13 +32,50 @@
     overflow: auto;
 }
 
+.even-container {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    ;
+}
+
+.even-col {
+    flex: 1
+}
+
 @media (max-width: 768px) {
     .content-row {
         flex-direction: column;
         height: auto;
     }
 
-    .content-card{
+    .content-card {
         margin: 3%;
     }
+
+    .even-container {
+        flex-direction: column;
+    }
+
+}
+
+
+/*custom date time format to look like primeng */
+.custom-datetime-input {
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    font-size: 1rem;
+    color: #495057;
+    background-color: #fff;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.custom-datetime-input:focus {
+    color: #495057;
+    background-color: #fff;
+    border-color: #8dc3fc;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
 }

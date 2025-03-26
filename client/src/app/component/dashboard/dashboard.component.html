@@ -16,13 +16,15 @@
                     <tbody>
                          <td>
                               @for (med of mornMeds; track $index) {
-                              <div style="display: flex; align-items: center; justify-content: flex-start; margin-bottom: 5px;">
+                              <div
+                                   style="display: flex; align-items: center; justify-content: flex-start; margin-bottom: 5px;">
 
                                    @if (med.taken){
                                    <!-- if med taken, display strikethrough med name -->
                                    <s>{{med.name}}</s>
                                    } @else {
-                                   <input type="checkbox" (click)="reduceDosage(med.med_id)" style="margin-right: 3px;"/>
+                                   <input type="checkbox" (click)="reduceDosage(med.med_id)"
+                                        style="margin-right: 3px;" />
                                    <span>{{med.name}}</span>
                                    }
                               </div>
@@ -31,12 +33,14 @@
                          </td>
                          <td>
                               @for (med of aftMeds; track $index) {
-                              <div style="display: flex; align-items: center; justify-content: flex-start; margin-bottom: 5px;">
+                              <div
+                                   style="display: flex; align-items: center; justify-content: flex-start; margin-bottom: 5px;">
                                    @if (med.taken){
                                    <!-- if med taken, display strikethrough med name -->
                                    <s>{{med.name}}</s>
                                    } @else {
-                                   <input type="checkbox" (click)="reduceDosage(med.med_id)" style="margin-right: 3px;"/>
+                                   <input type="checkbox" (click)="reduceDosage(med.med_id)"
+                                        style="margin-right: 3px;" />
                                    <span>{{med.name}}</span>
                                    }
                               </div>
@@ -45,13 +49,15 @@
                          </td>
                          <td>
                               @for (med of nightMeds; track $index) {
-                              <div style="display: flex; align-items: center; justify-content: flex-start; margin-bottom: 5px;">
+                              <div
+                                   style="display: flex; align-items: center; justify-content: flex-start; margin-bottom: 5px;">
 
                                    @if (med.taken){
                                    <!-- if med taken, display strikethrough med name -->
                                    <s>{{med.name}}</s>
                                    } @else {
-                                   <input type="checkbox" (click)="reduceDosage(med.med_id)" style="margin-right: 3px;"/>
+                                   <input type="checkbox" (click)="reduceDosage(med.med_id)"
+                                        style="margin-right: 3px;" />
                                    <span>{{med.name}}</span>
                                    }
                               </div>
@@ -67,11 +73,12 @@
           <div class="content-card">
                <p-scrollpanel [style]="{width:'95%;'}">
                     @if (aiAdvice) {
-                         <p>{{aiAdvice}}</p>
+                    <p>{{aiAdvice}}</p>
                     } @else {
-                         <div style="display: flex; justify-content: center; align-items: center; height: 100%; width: 100%;">
-                              <p-progress-spinner ariaLabel="loading" />
-                         </div>
+                    <div
+                         style="display: flex; justify-content: center; align-items: center; height: 100%; width: 100%;">
+                         <p-progress-spinner ariaLabel="loading" />
+                    </div>
                     }
                </p-scrollpanel>
           </div>
@@ -85,73 +92,92 @@
                <h3 style="margin-top: 2px; text-align: center;">Low Supply Medicines</h3>
                <p-scrollpanel [style]="{'width': '95%', 'textAlign': 'center'}">
                     @for (med of lowSupplyMeds; track $index) {
-                         <p>{{med}}</p>
+                    <p>{{med}}</p>
                     }
                </p-scrollpanel>
           </div>
      </div>
      <div style="flex: 3;">
           <div class="content-card">
-               <div class="even-row">
-                    <p-splitter [style]="{ height: '300px' }" styleClass="mb-8">
-                         <ng-template #panel>
-                             <div class="flex items-center justify-center h-full">Panel 1</div>
-                         </ng-template>
-                         <ng-template #panel>
-                             <div class="flex items-center justify-center h-full">Panel 2</div>
-                         </ng-template>
-                     </p-splitter>
-                    <div>
+               <div class="even-container">
+                    <div class="even-col">
                          <form *ngIf="newAppointment" [formGroup]="newAppointment" (submit)="processForm()">
                               <table>
                                    <tr>
-                                        <td>Summary: </td>
+                                        <td>Add new Appointment</td>
+                                   </tr>
+                                   <tr>
                                         <td>
-                                             <input type="text" formControlName="summary" readonly>
+                                             <p-ifta-label>
+                                                  <label for="summary">Summary</label>
+                                                  <input pInputText type="text" formControlName="summary" readonly>
+                                             </p-ifta-label>
                                         </td>
                                    </tr>
                                    <tr>
-                                        <td>Description: </td>
                                         <td>
-                                             <input type="text" formControlName="description">
+                                             <p-ifta-label>
+                                                  <label for="description">Description</label>
+                                                  <input pInputText type="text" formControlName="description">
+                                             </p-ifta-label>
                                         </td>
                                    </tr>
                                    <tr>
-                                        <td>Start: </td>
-                                        <td>
-                                             <input type="datetime-local" formControlName="start">
+                                        <td style="display: flex; align-items: center; gap: 4px;">
+                                             <span>
+                                                  Start:
+                                             </span>
+                                             <input class="custom-datetime-input" type="datetime-local"
+                                                  formControlName="start" />
                                         </td>
                                    </tr>
                                    <tr>
-                                        <td>End: </td>
-                                        <td>
-                                             <input type="datetime-local" formControlName="end">
+                                        <td style="display: flex; align-items: center; gap: 4px;">
+                                             <span>
+                                                  End:
+                                             </span>
+                                             <input class="custom-datetime-input" type="datetime-local"
+                                                  formControlName="end" />
                                         </td>
+
                                    </tr>
                                    <tr>
-                                        <td></td>
-                                        <td>
-                                             <button type="submit" [disabled]="newAppointment.invalid">add appointment</button>
+                                        <td style="text-align: right;">
+                                             <p-button type="submit" [disabled]="newAppointment.invalid">Add
+                                                  Appointment</p-button>
                                         </td>
                                    </tr>
                               </table>
                          </form>
                     </div>
-                    <div>
-                         <h2>My Calendar Events</h2>
-                         <button type="button" (click)="loadAppointments()">create</button>
-                         @if (events) {
-                         <ul>
-                              <li *ngFor="let event of events">
-                                   {{ event.summary }} —
-                                   {{ event.description }} -
-                                   {{ event.start }} to
-                                   {{ event.end}}
-                              </li>
-                         </ul>
-                         } @else {
-                         <h2>no appointments</h2>
-                         }
+                    <div class="even-col">
+                         <h2 style="text-align: center;">My Calendar Events</h2>
+                         <div class="even-row">
+                              <div style="text-align: left;">
+                                   <p-button type="button" (click)="linkCalendar()">link</p-button>
+                              </div>
+                              <div style="text-align: right;">
+                                   <p-button type="button" (click)="loadAppointments()">create</p-button>
+                              </div>
+                         </div>
+                         <div>
+                              @if (events.length > 0) {
+                              <table>
+                                   <tr>
+                                        <td>Event</td>
+                                        <td>Starts</td>
+                                        <td>Ends</td>
+                                   </tr>
+                                   <tr *ngFor="let event of events">
+                                        <td>{{ event.description }}</td>
+                                        <td>{{ event.start }}</td>
+                                        <td>{{ event.end}}</td>
+                                   </tr>
+                              </table>
+                              } @else {
+                              <h4 style="text-align: center;">No Upcoming Appointments.</h4>
+                              }
+                         </div>
                     </div>
                </div>
           </div>
@@ -159,7 +185,7 @@
 </div>
 
 
-
+<!-- 
 
 <button type="button" (click)="linkCalendar()">link</button>
 <form *ngIf="newAppointment" [formGroup]="newAppointment" (submit)="processForm()">
@@ -211,4 +237,4 @@
 </ul>
 } @else {
 <h2>no appointments</h2>
-}
+} -->
