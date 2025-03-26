@@ -121,7 +121,7 @@
             <div>
                 <div class="even-row">
                     <h5>Past Medical Conditions</h5>
-                    <p-button icon="pi pi-plus" type="button" (click)="addPastConds()" />
+                    <p-button label="ADD" type="button" (click)="addPastConds()" />
                 </div>
                 <!-- <h5>Past Medical Conditions:</h5>
                 <button type="button" (click)="addPastConds()">Add past condition</button> -->
@@ -136,7 +136,7 @@
                                 <input pInputText type="text" formControlName="condition"
                                 [ngClass]="{'is-valid': validCtrl(cond, 'condition')}">
                             </p-ifta-label>
-                            <p-button icon="pi pi-times" type="button" (click)="delPastConds(idx)" />
+                            <p-button label="DEL" type="button" (click)="delPastConds(idx)" />
                         </div>
                         }
                     </div>
@@ -146,7 +146,7 @@
             <div>
                 <div class="even-row">
                     <h5>Current Medical Conditions</h5>
-                    <p-button icon="pi pi-plus" type="button" (click)="addCurrConds()"/>
+                    <p-button label="ADD" type="button" (click)="addCurrConds()"/>
                 </div>
 
                 @if (currConds.controls.length <= 0) { <h4>No current conditions recorded</h4>
@@ -160,7 +160,7 @@
                                     <input pInputText type="text" formControlName="condition"
                                     [ngClass]="{'is-valid': validCtrl(cond, 'condition')}">
                                 </p-ifta-label>
-                                <p-button icon="pi pi-times" type="button" (click)="delCurrConds(idx)" />
+                                <p-button label="DEL" type="button" (click)="delCurrConds(idx)" />
                             </div>
                         }
                     </div>
@@ -170,7 +170,7 @@
             <div>
                 <div class="even-row">
                     <h5>Family History</h5>
-                    <p-button icon="pi pi-plus" type="button" (click)="addFamHist()" />
+                    <p-button label="ADD" type="button" (click)="addFamHist()" />
                 </div>
 
                 @if (famHist.controls.length <= 0) { <h4>No family history recorded</h4>
@@ -190,7 +190,7 @@
                                         <input pInputText type="text" formControlName="condition"
                                             [ngClass]="{'is-valid': validCtrl(hist, 'condition')}">
                                     </p-ifta-label>
-                                <p-button icon="pi pi-times" type="button" (click)="delFamHist(idx)" />
+                                <p-button label="DEL" type="button" (click)="delFamHist(idx)" />
                             </div>
                         }
                     </div>
@@ -200,7 +200,7 @@
             <div>
                 <div class="even-row">
                     <h5>Drug Allergy:</h5>
-                    <p-button icon="pi pi-plus" type="button" (click)="addDrugAlgy()" />
+                    <p-button label="ADD" type="button" (click)="addDrugAlgy()" />
                 </div>
                 @if (drugAlgy.controls.length <= 0) { <h4>No drug allergy recorded</h4>
                     }
@@ -215,7 +215,7 @@
                                         [ngClass]="{'is-valid': validCtrl(drug, 'drug')}">
                                 </p-ifta-label>
                                 <p-dropdown formControlName="severity" [options]="severityTypes" placeholder="Level of Severity" />
-                                <p-button icon="pi pi-times" type="button" (click)="delDrugAlgy(idx)" />
+                                <p-button label="DEL" type="button" (click)="delDrugAlgy(idx)" />
                                 <!-- <select name="severity" formControlName="severity">
                                     <option value="mild">mild</option>
                                     <option value="moderate">moderate</option>
@@ -230,7 +230,7 @@
             <div>
                 <div class="even-row">
                     <h5>Ongoing Treatment:</h5>
-                    <p-button icon="pi pi-plus" type="button" (click)="addTreatments()" />
+                    <p-button label="ADD" type="button" (click)="addTreatments()" />
                 </div>
                 @if (treatments.controls.length <= 0) { <h4>No ongoing treatments recorded</h4>
                     }
@@ -254,7 +254,7 @@
                                     <input pInputText type="date" formControlName="start_date"
                                     [ngClass]="{'is-valid': validCtrl(treatment, 'start_date')}">
                                 </p-ifta-label>
-                                <p-button icon="pi pi-times" type="button" (click)="delTreatment(idx)" />
+                                <p-button label="DEL" type="button" (click)="delTreatment(idx)" />
                             </div>
                         }
                     </div>

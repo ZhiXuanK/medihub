@@ -156,9 +156,9 @@
                               <div style="text-align: left;">
                                    <p-button type="button" (click)="linkCalendar()">Link to Google</p-button>
                               </div>
-                              <div style="text-align: right;">
+                              <!-- <div style="text-align: right;">
                                    <p-button type="button" (click)="loadAppointments()">Refresh Cal</p-button>
-                              </div>
+                              </div> -->
                          </div>
                          <div>
                               @if (events.length > 0) {
@@ -170,8 +170,8 @@
                                    </tr>
                                    <tr *ngFor="let event of events">
                                         <td>{{ event.description }}</td>
-                                        <td>{{ event.start }}</td>
-                                        <td>{{ event.end}}</td>
+                                        <td>{{ event.start | date: 'yyyy-MM-dd' }}</td>
+                                        <td>{{ event.end | date: 'yyyy-MM-dd'}}</td>
                                    </tr>
                               </table>
                               } @else {

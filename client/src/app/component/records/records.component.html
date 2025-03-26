@@ -22,7 +22,7 @@
                 </tr>
                 <tr>
                     <th style="width:24%">Doctor</th>
-                    <th style="width:24%" pSortableColumn="date">Date <p-sortIcon field=date></p-sortIcon></th>
+                    <th style="width:24%">Date </th>
                     <th style="width:24%">Purpose</th>
                     <th style="width:24%">Notes</th>
                     <th style="width:4%"></th>
@@ -43,7 +43,7 @@
                         {{visit.notes}}
                     </td>
                     <td>
-                        <p-button icon="pi pi-pencil" [rounded]="true" (onClick)="editVisit(visit)"/>
+                        <p-button label="EDIT" [rounded]="true" (onClick)="editVisit(visit)"/>
                     </td>
                 </tr>
             </ng-template>
@@ -70,7 +70,7 @@
                 </tr>
                 <tr>
                     <th style="width:23%">Name</th>
-                    <th style="width:23%" pSortableColumn="date">Start Date <p-sortIcon field=date></p-sortIcon></th>
+                    <th style="width:23%">Start Date</th>
                     <th style="width:23%">End Date</th>
                     <th style="width:23%">Dosage</th>
                     <th style="width:4%"></th>
@@ -92,10 +92,10 @@
                         {{medicine.dosage}}
                     </td>
                     <td>
-                        <p-button icon="pi pi-pencil" [rounded]="true"/>
+                        <p-button label="EDIT" [rounded]="true"/>
                     </td>
                     <td>
-                        <p-button icon="pi pi-times" [rounded]="true" />
+                        <p-button label="DEL" [rounded]="true" />
                     </td>
                 </tr>
             </ng-template>

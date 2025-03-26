@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, AbstractControl, Validators, FormControl } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Visit } from '../../models';
 import { AuthService } from '../../services/firebase-auth.service';
 import { VisitService } from '../../services/visit.service';
@@ -18,6 +18,7 @@ export class VisitComponent {
   private authSvc = inject(AuthService)
   private activatedRoute = inject(ActivatedRoute)
   private visitSvc = inject(VisitService)
+  private router = inject(Router)
 
   visit: any
 
@@ -57,6 +58,7 @@ export class VisitComponent {
     const form: Visit = this.visitDetails.value
     console.info(">>>visit details: ", form)
     this.visitSvc.addNewVisit(form)
+    this.router.navigate(["/records"])
   }
 
 

@@ -52,6 +52,10 @@ export class DashboardComponent {
       this.medSvc.retrieveLowSupplyMedicine(this.uid).then(res => this.lowSupplyMeds = res.results)
     })
 
+    if (this.calSvc.getAuthStatus()){
+      this.loadAppointments()
+    }
+
   }
 
   //medicine schedule
@@ -72,7 +76,9 @@ export class DashboardComponent {
 
   //calendar
   linkCalendar():void{
-    this.calSvc.requestAccessToken().subscribe()
+    this.calSvc.requestAccessToken().subscribe(
+      res => this.loadAppointments()
+    )
   }
 
   initializeAppointment():FormGroup{
@@ -91,6 +97,8 @@ export class DashboardComponent {
     this.calSvc.addMedicalAppointment(this.newAppointment.value).subscribe(
       response => {
         console.log("event created: ", response)
+        this.newAppointment.reset()
+        this.loadAppointments()
       },
       error => {
         console.error("error creating event: ", error)
