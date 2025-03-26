@@ -1,4 +1,4 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpParams } from "@angular/common/http";
 import { Injectable, inject } from "@angular/core";
 import { firstValueFrom } from "rxjs";
 import { Visit } from "../models";
@@ -11,6 +11,12 @@ export class VisitService {
 
     retrieveRecord(visitid: string){
 
+    }
+
+    retrieveAllVisitsByUser(userid:string):Promise<Visit[]>{
+        console.log("userid"+userid)
+        const params = new HttpParams().append("userid", userid)
+        return firstValueFrom(this.http.get<Visit[]>('/api/record/getallrecords', {params})).then(res => {console.log(res); return res})
     }
 
     addNewVisit(visit:Visit){

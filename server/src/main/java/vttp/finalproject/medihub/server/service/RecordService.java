@@ -2,6 +2,8 @@ package vttp.finalproject.medihub.server.service;
 
 import java.io.StringReader;
 import java.text.ParseException;
+import java.util.LinkedList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -10,10 +12,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 import jakarta.json.Json;
 import jakarta.json.JsonArray;
+import jakarta.json.JsonArrayBuilder;
 import jakarta.json.JsonObject;
 import jakarta.json.JsonReader;
+import static vttp.finalproject.medihub.server.Utils.dateToISOString;
+
 import static vttp.finalproject.medihub.server.Utils.stringToDate;
 import vttp.finalproject.medihub.server.models.Medicine;
+import static vttp.finalproject.medihub.server.models.Medicine.toJson;
 import vttp.finalproject.medihub.server.models.Visit;
 import vttp.finalproject.medihub.server.repository.MedicineRepository;
 import vttp.finalproject.medihub.server.repository.VisitRepository;
@@ -26,6 +32,37 @@ public class RecordService {
 
     @Autowired
     private VisitRepository visitRepo;
+
+    public JsonArray getAllRecordsByUser(String userid){
+
+        List<Medicine> medicines = medRepo.retrieveMedicineByUser(userid);
+        List<Visit> visits = visitRepo.retrieveAllVisitByUser(userid);
+
+        JsonArrayBuilder results = Json.createArrayBuilder();
+
+        for (Visit v:visits){
+            JsonArrayBuilder arrBuilder = Json.createArrayBuilder();
+            for (Medicine m:medicines){
+                if (m.getVisit_id().equals(v.getVisit_id())){
+                    arrBuilder.add(toJson(m));
+                }
+            }
+            JsonArray arr = arrBuilder.build();
+            JsonObject obj = Json.createObjectBuilder()
+                .add("visit_id", v.getVisit_id())
+                .add("user_id", v.getUser_id())
+                .add("doctor", v.getDoctor())
+                .add("visit_date", dateToISOString(v.getVisit_date()))
+                .add("purpose", v.getPurpose())
+                .add("notes", v.getNotes())
+                .add("medicine", arr)
+                .build();
+
+            results.add(obj);
+        }
+        return results.build();
+
+    }
 
     @Transactional
     public void insertNewVisit(String payload) throws DataAccessException, ParseException{

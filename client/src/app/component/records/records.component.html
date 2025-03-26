@@ -1,0 +1,105 @@
+
+<div class="content-row">
+    <div style="margin-left: auto;">
+        <p-button label="Add New Record" [rounded]="true" (onClick)="addNewRecord()"/>
+    </div>
+</div>
+
+<div class="content-row">
+    <div class="content-card">
+        <p-table
+        [value]="visits"
+        [paginator]="true"
+        [rows]="5"
+        [tableStyle]="{ 'min-width': '50rem' }"
+        [rowsPerPageOptions]="[5, 10, 20]"
+    >
+        <ng-template #header>
+            <tr>
+                <th colspan="5" style="text-align: center;">
+                    Visit List
+                </th>
+            </tr>
+            <tr>
+                <th style="width:24%">Doctor</th>
+                <th style="width:24%" pSortableColumn="date">Date <p-sortIcon field=date></p-sortIcon></th>
+                <th style="width:24%">Purpose</th>
+                <th style="width:24%">Notes</th>
+                <th style="width:4%"></th>
+            </tr>
+        </ng-template>
+        <ng-template #body let-visit>
+            <tr>
+                <td>
+                    {{visit.doctor}}
+                </td>
+                <td>
+                    {{visit.visit_date | date: 'yyyy-MM-dd'}}
+                </td>
+                <td>
+                    {{visit.purpose}}
+                </td>
+                <td>
+                    {{visit.notes}}
+                </td>
+                <td>
+                    <p-button icon="pi pi-pencil" [rounded]="true" (onClick)="editVisit(visit.visit_id)"/>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+    </div>
+</div>
+
+
+
+<div class="content-row">
+    <div class="content-card">
+        <p-table
+        [value]="medicines"
+        [paginator]="true"
+        [rows]="5"
+        [tableStyle]="{ 'min-width': '50rem' }"
+        [rowsPerPageOptions]="[5, 10, 20]"
+    >
+        <ng-template #header>
+            <tr>
+                <th colspan="6" style="text-align: center;">
+                    Medicine List
+                </th>
+            </tr>
+            <tr>
+                <th style="width:23%">Name</th>
+                <th style="width:23%" pSortableColumn="date">Start Date <p-sortIcon field=date></p-sortIcon></th>
+                <th style="width:23%">End Date</th>
+                <th style="width:23%">Dosage</th>
+                <th style="width:4%"></th>
+                <th style="width:4%"></th>
+            </tr>
+        </ng-template>
+        <ng-template #body let-medicine>
+            <tr>
+                <td>
+                    {{medicine.name}}
+                </td>
+                <td>
+                    {{medicine.start_date | date: 'yyyy-MM-dd'}}
+                </td>
+                <td>
+                    {{medicine.end_date | date: 'yyyy-MM-dd'}}
+                </td>
+                <td>
+                    {{medicine.dosage}}
+                </td>
+                <td>
+                    <p-button icon="pi pi-pencil" [rounded]="true"/>
+                </td>
+                <td>
+                    <p-button icon="pi pi-times" [rounded]="true" />
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+    </div>
+</div>
+

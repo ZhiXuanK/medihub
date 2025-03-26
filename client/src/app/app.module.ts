@@ -31,13 +31,15 @@ import { PrimeModule } from './primeng.module';
 import { MedicineService } from './services/medicine.service';
 import { RefreshComponent } from './component/refresh/refresh.component';
 import { AIService } from './services/ai.service';
+import { RecordsComponent } from './component/records/records.component';
 //import { environment } from './environments/environment';
 
 const appRoutes:Routes = [
   { path:'', component: LoginComponent },
   { path:'signup', component: SignupComponent },
   { path:'dashboard', component: DashboardComponent, canActivate:[AuthGuard] },
-  { path:'records', component: VisitComponent, canActivate:[AuthGuard] },
+  { path:'visit', component: VisitComponent, canActivate:[AuthGuard] },
+  { path:'records', component:RecordsComponent, canActivate:[AuthGuard] },
   { path:'profile', component:ProfileComponent, canActivate:[AuthGuard]},
   { path:'map', component: MapComponent, canActivate:[AuthGuard]},
   { path:'refresh', component:RefreshComponent},
@@ -53,7 +55,8 @@ const appRoutes:Routes = [
     MapComponent,
     DashboardComponent,
     VisitComponent,
-    RefreshComponent
+    RefreshComponent,
+    RecordsComponent
   ],
   imports: [
     BrowserModule,

@@ -12,6 +12,7 @@ import jakarta.json.Json;
 import jakarta.json.JsonArray;
 import jakarta.json.JsonArrayBuilder;
 import jakarta.json.JsonObject;
+import vttp.finalproject.medihub.server.models.Medicine;
 import vttp.finalproject.medihub.server.repository.MedicineRepository;
 import vttp.finalproject.medihub.server.repository.ProfileRepository;
 import vttp.finalproject.medihub.server.repository.VisitRepository;
@@ -22,11 +23,10 @@ public class MedicineService {
     @Autowired
     private MedicineRepository medRepo;
 
-    @Autowired
-    private VisitRepository visitRepo;
 
-    @Autowired
-    private ProfileRepository profileRepo;
+    public List<Medicine> getMedicinesByUser(String userid){
+        return medRepo.retrieveMedicineByUser(userid);
+    }
 
     //get list of medicine that are running low - {userId: [medicine], userId: [medicine]}
     public Map<String, List<JsonObject>> getLowSupplyMedicineByUser(){

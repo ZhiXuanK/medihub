@@ -95,8 +95,8 @@ export class VisitComponent {
         user_id: this.fb.control<string>(this.visit.user_id),
         doctor: this.fb.control<string>(this.visit.doctor, [Validators.required, Validators.minLength(3)]),
         visit_date: this.fb.control<string>(this.visit.visit_date, [Validators.required]),
-        purpose: this.fb.control<string>(this.visit.purpose),
-        notes: this.fb.control<string>(this.visit.notes),
+        purpose: this.fb.control<string>(this.visit.purpose, [Validators.required, Validators.minLength(1)]),
+        notes: this.fb.control<string>(this.visit.notes, [Validators.required, Validators.minLength(1)]),
         medicine: this.fb.array(
           this.visit.medicine.map( (med: {
             visit_id: any; timing: any; med_id: any; name: any; active_ingredients: any; start_date: any; end_date: any; dosage: any; 
@@ -109,7 +109,7 @@ export class VisitComponent {
               start_date: [med.start_date, [Validators.required]],
               end_date: [med.end_date, [Validators.required]],
               dosage: [med.dosage, [Validators.required, Validators.min(1)]],
-              timing: [med.timing, [Validators.required]]
+              timing: [med.timing, [Validators.required, Validators.min(1)]]
             })
           )
         )

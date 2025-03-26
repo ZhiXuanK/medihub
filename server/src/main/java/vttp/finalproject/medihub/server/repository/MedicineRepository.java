@@ -21,6 +21,7 @@ import static vttp.finalproject.medihub.server.Utils.Q_REDUCE_DOSAGE;
 import static vttp.finalproject.medihub.server.Utils.Q_RETRIEVE_LOW_SUPPLY_MEDICINE;
 import static vttp.finalproject.medihub.server.Utils.Q_RETRIEVE_MEDICINE;
 import static vttp.finalproject.medihub.server.Utils.Q_RETRIEVE_MEDICINE_AFTERNOON_STRING;
+import static vttp.finalproject.medihub.server.Utils.Q_RETRIEVE_MEDICINE_BY_USER;
 import static vttp.finalproject.medihub.server.Utils.Q_RETRIEVE_MEDICINE_MORNING_STRING;
 import static vttp.finalproject.medihub.server.Utils.Q_RETRIEVE_MEDICINE_NIGHT_STRING;
 import static vttp.finalproject.medihub.server.Utils.dateToLong;
@@ -74,6 +75,24 @@ public class MedicineRepository {
             medicineList.add(medicine);
         }
         return medicineList;
+    }
+
+    public List<Medicine> retrieveMedicineByUser(String userid){
+        final SqlRowSet rs = jdbcTemplate.queryForRowSet(Q_RETRIEVE_MEDICINE_BY_USER, userid);
+        List<Medicine> medicines = new LinkedList<>();
+        while (rs.next()){
+            Medicine medicine = new Medicine(
+                rs.getString("med_id"),
+                rs.getString("visit_id"),
+                rs.getString("name"),
+                longToDate(rs.getLong("start_date")),
+                longToDate(rs.getLong("end_date")),
+                rs.getInt("dosage"),
+                rs.getString("timing"));
+
+            medicines.add(medicine);
+        }
+        return medicines;
     }
 
     // get list of medicine that needs to be taken today - only name

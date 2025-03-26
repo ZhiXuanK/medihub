@@ -1,6 +1,14 @@
 package vttp.finalproject.medihub.server.models;
 
+import static vttp.finalproject.medihub.server.Utils.dateToISOString;
+
+import java.io.StringReader;
 import java.util.Date;
+
+import jakarta.json.Json;
+import jakarta.json.JsonArray;
+import jakarta.json.JsonObject;
+import jakarta.json.JsonReader;
 
 public class Medicine {
 
@@ -87,5 +95,19 @@ public class Medicine {
 
     public Medicine(){
 
+    }
+
+    public static JsonObject toJson(Medicine med){
+        JsonReader reader = Json.createReader(new StringReader(med.getTiming()));
+        JsonArray arr = reader.readArray();
+        return Json.createObjectBuilder()
+            .add("med_id", med.getMed_id())
+            .add("visit_id", med.getVisit_id())
+            .add("name", med.getName())
+            .add("start_date", dateToISOString(med.getStart_date()))
+            .add("end_date", dateToISOString(med.getEnd_date()))
+            .add("dosage", med.getDosage())
+            .add("timing", arr)
+            .build();
     }
 }

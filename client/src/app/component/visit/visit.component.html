@@ -28,6 +28,10 @@
                         <input pInputText type="purpose" formControlName="purpose"
                             [ngClass]="{'is-valid': valid('purpose')}">
                     </p-ifta-label>
+                    <small *ngIf="visitDetails.get('purpose')?.invalid && visitDetails.get('purpose')?.touched"
+                    class="p-error">
+                    Please enter your purpose for visiting
+                </small>
                 </div>
 
                 <div>
@@ -47,6 +51,10 @@
                         [ngClass]="{'is-valid': valid('notes')}"></textarea>
                     <label for="notes">Notes </label>
                 </p-floatlabel>
+                <small *ngIf="visitDetails.get('notes')?.invalid && visitDetails.get('notes')?.touched"
+                class="p-error">
+                Please enter important details from the consult
+            </small>
             </div>
 
             <div>
