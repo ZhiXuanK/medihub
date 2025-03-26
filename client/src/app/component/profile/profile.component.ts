@@ -16,7 +16,7 @@ export class ProfileComponent {
   profile: any
 
   uid: string = ""
-  isEditing: boolean = false
+  isEditing: boolean = true
 
   medProfile !: FormGroup
 

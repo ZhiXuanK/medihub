@@ -10,9 +10,9 @@
             <th></th>
         </thead>
         <tr>
-            <td colspan="1">Name: </td>
+            <td >Name: </td>
             <td colspan="2"> {{profile.name}} </td>
-            <td colspan="1">Blood Type:</td>
+            <td >Blood Type:</td>
             <td colspan="2">
                 {{profile.blood_type}}
             </td>
@@ -45,32 +45,30 @@
         </tr>
         <tr>
             <td>Family History: </td>
-            <td>
+            <td colspan="2">
                 <ul>
                     @for (hist of profile.family_history; track $index) {
                     <li>
-                        {{hist.affected_member}} --- {{hist.condition}}
+                        {{hist.affected_member}} ({{hist.condition}})
                     </li>
                     }
                 </ul>
             </td>
             <td>Drug Allergy: </td>
-            <td>
+            <td colspan="2">
                 <ul>
                     @for (allergy of profile.drug_allergies; track $index) {
                     <li>
-                        {{allergy.drug}} --- {{allergy.severity}}
+                        {{allergy.drug}} ({{allergy.severity}})
                     </li>
                     }
                 </ul>
             </td>
         </tr>
-        <tr>
 
-        </tr>
         <tr>
             <td>Ongoing Treatments: </td>
-            <td>
+            <td colspan="5">
                 <ul>
                     @for (treat of profile.ongoing_treatments; track $index) {
                     <li>
@@ -82,7 +80,7 @@
         </tr>
     </table>
 
-    <div class="row" styles="">
+    <div class="content-row" style="justify-content: flex-end;">
         <p-button [rounded]="true" type="button" (click)="edit()">EDIT</p-button>
     </div>
 
@@ -94,11 +92,11 @@
     <form *ngIf="medProfile" [formGroup]="medProfile" (submit)="processForm()">
 
         <div>
-            <input type="text" formControlName="user_id" [ngClass]="{'is-valid': valid('user_id')}">
+            <input type="text" formControlName="user_id" [ngClass]="{'is-valid': valid('user_id')}" readonly>
         </div>
 
         <div>
-            <input type="text" formControlName="user_id" [ngClass]="{'is-valid': valid('user_id')}">
+            <input type="text" formControlName="name" [ngClass]="{'is-valid': valid('user_id')}">
         </div>
 
         <div>
