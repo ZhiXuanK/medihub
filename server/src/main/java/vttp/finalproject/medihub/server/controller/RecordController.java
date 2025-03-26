@@ -24,7 +24,6 @@ public class RecordController {
     public ResponseEntity<String> postAddVisit(
         @RequestBody String payload
     ) throws DataAccessException, ParseException{
-        System.out.println(payload);
         recordSvc.insertNewVisit(payload);
 
         return ResponseEntity.ok("");

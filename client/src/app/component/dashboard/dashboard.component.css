@@ -1,10 +1,8 @@
-
 .styled-table {
     border-collapse: collapse;
     font-size: 0.9em;
     justify-content: center;
-    width: 95%;
-    margin: 2% 1%;
+    width: 100%;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
 }
 
@@ -21,4 +19,26 @@
 
 .styled-table tbody tr {
     border-bottom: 1px solid #dddddd;
+}
+
+.content-row {
+    height: 40vh;
+    box-sizing: border-box;
+}
+
+.content-card {
+    height: 98%;
+    box-sizing: border-box;
+    overflow: auto;
+}
+
+@media (max-width: 768px) {
+    .content-row {
+        flex-direction: column;
+        height: auto;
+    }
+
+    .content-card{
+        margin: 3%;
+    }
 }

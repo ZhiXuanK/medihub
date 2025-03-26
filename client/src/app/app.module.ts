@@ -29,6 +29,8 @@ import { VisitService } from './services/visit.service';
 import { APIService } from './services/api.service';
 import { PrimeModule } from './primeng.module';
 import { MedicineService } from './services/medicine.service';
+import { RefreshComponent } from './component/refresh/refresh.component';
+import { AIService } from './services/ai.service';
 //import { environment } from './environments/environment';
 
 const appRoutes:Routes = [
@@ -38,6 +40,7 @@ const appRoutes:Routes = [
   { path:'records', component: VisitComponent, canActivate:[AuthGuard] },
   { path:'profile', component:ProfileComponent, canActivate:[AuthGuard]},
   { path:'map', component: MapComponent, canActivate:[AuthGuard]},
+  { path:'refresh', component:RefreshComponent},
   { path:'**', component:DashboardComponent, canActivate:[AuthGuard]}
 ];
 
@@ -49,7 +52,8 @@ const appRoutes:Routes = [
     ProfileComponent,
     MapComponent,
     DashboardComponent,
-    VisitComponent
+    VisitComponent,
+    RefreshComponent
   ],
   imports: [
     BrowserModule,
@@ -65,7 +69,7 @@ const appRoutes:Routes = [
     }),
     GoogleMapsModule,
     RouterModule.forRoot(appRoutes),
-    PrimeModule,
+    PrimeModule
   ],
   providers: [
     provideHttpClient(),
@@ -82,7 +86,8 @@ const appRoutes:Routes = [
     UserService,
     VisitService,
     APIService,
-    MedicineService
+    MedicineService,
+    AIService
   ],
   bootstrap: [AppComponent]
 })

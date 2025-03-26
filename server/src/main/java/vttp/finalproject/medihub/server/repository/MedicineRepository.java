@@ -82,25 +82,25 @@ public class MedicineRepository {
         SimpleDateFormat sdfInput = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy");
         Date midDate = sdfInput.parse(currentDate);
         SimpleDateFormat sdfOutput = new SimpleDateFormat("yyyy-MM-dd");
-        String date = sdfOutput.format(midDate);
+        Long date = dateToLong(sdfOutput.format(midDate));
         List<String> all = new LinkedList<>();
 
         List<String> morning = new LinkedList<>();
-        SqlRowSet rsMorning = jdbcTemplate.queryForRowSet(Q_RETRIEVE_MEDICINE_MORNING_STRING, date, date, uid);
+        final SqlRowSet rsMorning = jdbcTemplate.queryForRowSet(Q_RETRIEVE_MEDICINE_MORNING_STRING, date, date, uid);
         while (rsMorning.next()) {
             morning.add(rsMorning.getString("name"));
             all.add(rsMorning.getString("name"));
         }
 
         List<String> afternoon = new LinkedList<>();
-        SqlRowSet rsAfternoon = jdbcTemplate.queryForRowSet(Q_RETRIEVE_MEDICINE_AFTERNOON_STRING, date, date, uid);
+        final SqlRowSet rsAfternoon = jdbcTemplate.queryForRowSet(Q_RETRIEVE_MEDICINE_AFTERNOON_STRING, date, date, uid);
         while (rsAfternoon.next()) {
             afternoon.add(rsAfternoon.getString("name"));
             all.add(rsAfternoon.getString("name"));
         }
 
         List<String> night = new LinkedList<>();
-        SqlRowSet rsNight = jdbcTemplate.queryForRowSet(Q_RETRIEVE_MEDICINE_NIGHT_STRING, date, date, uid);
+        final SqlRowSet rsNight = jdbcTemplate.queryForRowSet(Q_RETRIEVE_MEDICINE_NIGHT_STRING, date, date, uid);
         while (rsNight.next()) {
             night.add(rsNight.getString("name"));
             all.add(rsNight.getString("name"));

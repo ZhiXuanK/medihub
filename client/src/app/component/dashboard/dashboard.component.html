@@ -32,7 +32,6 @@
                          <td>
                               @for (med of aftMeds; track $index) {
                               <div style="display: flex; align-items: center; justify-content: flex-start; margin-bottom: 5px;">
-
                                    @if (med.taken){
                                    <!-- if med taken, display strikethrough med name -->
                                    <s>{{med.name}}</s>
@@ -66,10 +65,36 @@
      </div>
      <div style="flex: 1;">
           <div class="content-card">
-
+               <p-scrollpanel [style]="{width:'95%;'}">
+                    <p>{{aiAdvice}}</p>
+               </p-scrollpanel>
           </div>
      </div>
 </div>
+
+
+<div class="content-row">
+     <div style="flex: 1;">
+          <div class="content-card" style="align-content: center;justify-content: center;">
+               <h3 style="margin-top: 2px; text-align: center;">Low Supply Medicines</h3>
+               <p-scrollpanel [style]="{'width': '95%', 'textAlign': 'center'}">
+                    @for (med of lowSupplyMeds; track $index) {
+                         <p>{{med}}</p>
+                    }
+               </p-scrollpanel>
+          </div>
+     </div>
+     <div style="flex: 3;">
+          <div class="content-card">
+               <p-scrollpanel [style]="{width:'95%;'}">
+                    <p>
+                         
+                    </p>
+               </p-scrollpanel>
+          </div>
+     </div>
+</div>
+
 
 
 

@@ -2,6 +2,7 @@ package vttp.finalproject.medihub.server.controller;
 
 import java.text.ParseException;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.json.Json;
+import jakarta.json.JsonArray;
+import jakarta.json.JsonArrayBuilder;
 import jakarta.json.JsonObject;
 import vttp.finalproject.medihub.server.service.AIService;
 import vttp.finalproject.medihub.server.service.MedicineService;
@@ -35,7 +38,6 @@ public class DashboardController {
         @RequestParam String uid
     ) throws ParseException{
         List<String> medicines = medSvc.getAllMedicineOfTheDay(uid);
-        System.out.println(medicines.get(0));
         String aiAdvice = aiSvc.getAiAdvice(medicines);
 
         JsonObject response = Json.createObjectBuilder()
@@ -49,7 +51,6 @@ public class DashboardController {
     public ResponseEntity<String> getMedicineSchedule(
         @PathVariable String uid
     ) throws ParseException{
-        System.out.println("here");
         JsonObject results = medSvc.getMedicineScheduleWithId(uid);
         System.out.println(results.toString());
 
@@ -63,6 +64,39 @@ public class DashboardController {
         medSvc.reduceMed(med_id);
 
         return ResponseEntity.ok("");
+    }
+
+    @GetMapping("/lowsupplymed/{uid}")
+    public ResponseEntity<String> getLowSupplyMedicine(
+        @PathVariable String uid
+    ){
+        Map<String, List<JsonObject>> results = medSvc.getLowSupplyMedicineByUser();
+        
+        if (results.containsKey(uid)){
+            List<JsonObject> meds = results.get(uid);
+            JsonArrayBuilder builder = Json.createArrayBuilder();
+            for (JsonObject obj:meds){
+                builder.add(obj.getString("name"));
+            }
+            JsonArray arr = builder.build();
+
+            JsonObject resp = Json.createObjectBuilder()
+                .add("results", arr)
+                .build();
+
+            return ResponseEntity.ok(resp.toString());
+        }
+
+        JsonArray arr = Json.createArrayBuilder()
+            .add("You're well stocked, no need to worry about medicine supply!")
+            .build();
+
+        JsonObject resp = Json.createObjectBuilder()
+            .add("results",arr)
+            .build();
+
+        return ResponseEntity.ok(resp.toString());
+
     }
     
     

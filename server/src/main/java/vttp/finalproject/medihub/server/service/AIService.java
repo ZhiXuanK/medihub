@@ -22,6 +22,9 @@ public class AIService {
 
     public String getAiAdvice(List<String> medicines){
         String medicine = "";
+        if (medicines.size() == 0){
+            return "No Medicine Advice for the day";
+        }
         for (String s:medicines){
             if (medicine == ""){
                 medicine = s;
@@ -31,9 +34,9 @@ public class AIService {
         }
         final String med = medicine;
         System.out.println(med);
-        if (med.length() == 0){
-            return "No medicine for the day";
-        }
+        // if (med.length() == 0){
+        //     return "No medicine for the day";
+        // }
 
         String query = chatClient.prompt()
             .user(

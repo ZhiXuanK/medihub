@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { inject, Injectable } from "@angular/core";
-import { MedicineSchedule } from "../models";
+import { LowSupplyResponse, MedicineSchedule } from "../models";
 import { firstValueFrom } from "rxjs";
 
 
@@ -15,6 +15,10 @@ export class MedicineService {
 
     reduceDosage(med_id:string):void{
         firstValueFrom(this.http.delete(`/api/dashboard/medicineschedule/${med_id}`))
+    }
+
+    retrieveLowSupplyMedicine(uid:string):Promise<LowSupplyResponse>{
+        return firstValueFrom(this.http.get<LowSupplyResponse>(`api/dashboard/lowsupplymed/${uid}`)).then(res => {console.log(res); return res})
     }
 
 

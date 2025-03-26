@@ -40,6 +40,7 @@ public class MedicineService {
 
     public List<String> getAllMedicineOfTheDay(String uid) throws ParseException{
         List<String> allMeds = medRepo.getMedicineOfTheDay(uid).get("all");
+        System.out.println(">>>Size: " + allMeds.size());
         return allMeds;
     }
 
@@ -51,7 +52,6 @@ public class MedicineService {
     }
 
     public JsonObject getMedicineScheduleWithId(String uid) throws ParseException{
-        System.out.println("hereherehere");
 
         Map<String, List<JsonObject>> results = medRepo.getMedicineOfTheDayWithId(uid);
 

@@ -79,3 +79,11 @@ export interface MedicineSchedule {
     afternoon: MedicineDisplay[]
     night: MedicineDisplay[]
 }
+
+export interface AIAdvice {
+    advice: string
+}
+
+export interface LowSupplyResponse {
+    results: string[]
+}

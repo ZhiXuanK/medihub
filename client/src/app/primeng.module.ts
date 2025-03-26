@@ -12,6 +12,7 @@ import { DatePickerModule } from 'primeng/datepicker';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { CheckboxModule } from 'primeng/checkbox';
+import { ScrollPanelModule } from 'primeng/scrollpanel';
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import { CheckboxModule } from 'primeng/checkbox';
         DatePickerModule,
         FloatLabelModule,
         InputNumberModule,
-        CheckboxModule
+        CheckboxModule,
+        ScrollPanelModule
     ]
 })
 
