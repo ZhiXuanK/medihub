@@ -35,6 +35,7 @@ const appRoutes:Routes = [
   { path:'', component: LoginComponent },
   { path:'signup', component: SignupComponent },
   { path:'dashboard', component: DashboardComponent, canActivate:[AuthGuard] },
+  { path:'records', component: VisitComponent, canActivate:[AuthGuard] },
   { path:'profile', component:ProfileComponent, canActivate:[AuthGuard]},
   { path:'map', component: MapComponent, canActivate:[AuthGuard]},
   { path:'**', component:DashboardComponent, canActivate:[AuthGuard]}

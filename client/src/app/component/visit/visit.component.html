@@ -1,51 +1,62 @@
+<div class="form-container">
+    <div class="form-card">
+        <form *ngIf="visitDetails" [formGroup]="visitDetails" (submit)="processForm()">
 
+            <div>
+                <input type="hidden" formControlName="visit_id" readonly>
+            </div>
 
+            <div>
+                <input type="hidden" formControlName="user_id" readonly>
+            </div>
 
+            <div>
+                <p-ifta-label>
+                    <label for="doctor">Doctor </label>
+                    <input pInputText type="text" formControlName="doctor" [ngClass]="{'is-valid': valid('doctor')}">
+                </p-ifta-label>
+                <small *ngIf="visitDetails.get('doctor')?.invalid && visitDetails.get('doctor')?.touched"
+                    class="p-error">
+                    Please enter your doctor's name.
+                </small>
+            </div>
 
-<div>
+            <div class="even-row">
+                <div>
+                    <p-ifta-label>
+                        <label for="purpose">Purpose of visit </label>
+                        <input pInputText type="purpose" formControlName="purpose"
+                            [ngClass]="{'is-valid': valid('purpose')}">
+                    </p-ifta-label>
+                </div>
 
-    <form *ngIf="visitDetails" [formGroup]="visitDetails" (submit)="processForm()">
+                <div>
+                    <label for="visit_date">Visit Date </label>
+                    <p-datepicker dateFormat="yy.mm.dd" formControlName="visit_date" [ngClass]="{'is-valid': valid('visit_date')}" />
+                        <small
+                            *ngIf="visitDetails.get('visit_date')?.invalid && visitDetails.get('visit_date')?.touched"
+                            class="p-error">
+                            Please select a visit date.
+                        </small>
+                </div>
+            </div>
 
-        <div>
-            <label for="visit_id">Visit ID: </label>
-            <input type="text" formControlName="visit_id" readonly>
-        </div>
+            <div class="even-row">
+                <p-iftalabel>
+                    <label for="notes">Notes: </label>
+                    <textarea pSize="large" formControlName="notes" [ngClass]="{'is-valid': valid('notes')}"></textarea>
+                </p-iftalabel>
+            </div>
 
-        <div>
-            <label for="user_id">User ID: </label>
-            <input type="text" formControlName="user_id" readonly>
-        </div>
+            <button type="submit" [disabled]="visitDetails.invalid">Submit</button>
 
-        <div>
-            <label for="doctor">Doctor: </label>
-            <input type="text" formControlName="doctor" [ngClass]="{'is-valid': valid('doctor')}">
-        </div>
-
-        <div>
-            <label for="visit_date">Visit Date: </label>
-            <input type="date" formControlName="visit_date" [ngClass]="{'is-valid': valid('visit_date')}">
-        </div>
-
-        <div>
-            <label for="purpose">Purpose of visit: </label>
-            <input type="purpose" formControlName="purpose" [ngClass]="{'is-valid': valid('purpose')}">
-        </div>
-
-        <div>
-            <label for="notes">Notes: </label>
-            <textarea formControlName="notes" [ngClass]="{'is-valid': valid('notes')}"></textarea>
-        </div>
-
-        <button type="submit" [disabled]="visitDetails.invalid">Submit</button>
-
-        <div>
-            <h5>Medicine Prescribed: </h5>
-            <button type="button" (click)="addMedicine()">Add Medicine</button>
-            @if (medicine.controls.length <= 0) {
-                <h4>No medicine prescribed</h4>
-            } @else {
-                <div formArrayName="medicine">
-                    @for ( med of medicine.controls; let idx=$index; track med){
+            <div>
+                <h5>Medicine Prescribed: </h5>
+                <button type="button" (click)="addMedicine()">Add Medicine</button>
+                @if (medicine.controls.length <= 0) { <h4>No medicine prescribed</h4>
+                    } @else {
+                    <div formArrayName="medicine">
+                        @for ( med of medicine.controls; let idx=$index; track med){
                         <div [formGroupName]="idx">
                             <div>
                                 <label for="med_id">Medicine ID: </label>
@@ -54,54 +65,59 @@
 
                             <div>
                                 <label for="name">Medicine name: </label>
-                                <input type="text" formControlName="name" [ngClass]="{'is-valid': validCtrl(med, 'name')}">
+                                <input type="text" formControlName="name"
+                                    [ngClass]="{'is-valid': validCtrl(med, 'name')}">
                             </div>
 
                             <!-- <div>
-                                <label for="active_ingredients">Active Ingredients: </label>
-                                <input type="text" formControlName="active_ingredients" [ngClass]="{'is-valid': validCtrl(med, 'active_ingredients')}">
-                            </div> -->
+                                    <label for="active_ingredients">Active Ingredients: </label>
+                                    <input type="text" formControlName="active_ingredients" [ngClass]="{'is-valid': validCtrl(med, 'active_ingredients')}">
+                                </div> -->
 
                             <div>
                                 <label for="start_date">Start Date: </label>
-                                <input type="date" formControlName="start_date" [ngClass]="{'is-valid': validCtrl(med, 'start_date')}">
+                                <input type="date" formControlName="start_date"
+                                    [ngClass]="{'is-valid': validCtrl(med, 'start_date')}">
                             </div>
 
                             <div>
                                 <label for="end_date">End Date: </label>
-                                <input type="date" formControlName="end_date" [ngClass]="{'is-valid': validCtrl(med, 'end_date')}">
+                                <input type="date" formControlName="end_date"
+                                    [ngClass]="{'is-valid': validCtrl(med, 'end_date')}">
                             </div>
 
                             <div>
                                 <label for="dosage">Dosage: </label>
-                                <input type="number" formControlName="dosage" [ngClass]="{'is-valid': validCtrl(med, 'dosage')}">
+                                <input type="number" formControlName="dosage"
+                                    [ngClass]="{'is-valid': validCtrl(med, 'dosage')}">
                             </div>
 
                             <div>
                                 <label>Timing: </label>
                                 <div formArrayName="timing">
                                     @for (option of timingOptions; track $index) {
-                                        <input type="checkbox" [value]="option" (change)="onTimingChange($event, idx)" [id]="option + '_' + idx" [checked]="isTimingSelected(med, option)">
-                                        <label [for]="option + '_' + idx">{{option | titlecase}}</label>
+                                    <input type="checkbox" [value]="option" (change)="onTimingChange($event, idx)"
+                                        [id]="option + '_' + idx" [checked]="isTimingSelected(med, option)">
+                                    <label [for]="option + '_' + idx">{{option | titlecase}}</label>
                                     }
                                 </div>
                             </div>
 
                             <!-- <div>
-                                <label for="timing">Timing:</label>
-                                <input type="checkbox" formControlName="timing" value="morning" id="morning">
-                                <label for="morning">Morning</label>
-                                <input type="checkbox" formControlName="timing" value="afternoon" id="afternoon">
-                                <label for="afternoon">Afternoon</label>
-                                <input type="checkbox" formControlName="timing" value="night" id="night">
-                                <label for="night">Night</label>
-                            </div> -->
+                                    <label for="timing">Timing:</label>
+                                    <input type="checkbox" formControlName="timing" value="morning" id="morning">
+                                    <label for="morning">Morning</label>
+                                    <input type="checkbox" formControlName="timing" value="afternoon" id="afternoon">
+                                    <label for="afternoon">Afternoon</label>
+                                    <input type="checkbox" formControlName="timing" value="night" id="night">
+                                    <label for="night">Night</label>
+                                </div> -->
                         </div>
+                        }
+                    </div>
                     }
-                </div>
-            }
-        </div>
+            </div>
 
-    </form>
-
+        </form>
+    </div>
 </div>

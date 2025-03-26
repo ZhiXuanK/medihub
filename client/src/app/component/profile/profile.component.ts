@@ -16,16 +16,19 @@ export class ProfileComponent {
   profile: any
 
   uid: string = ""
-  isEditing: boolean = true
+  isEditing: boolean = false
 
   medProfile !: FormGroup
+
+  bloodTypes = ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-']
+  severityTypes = ['mild', 'moderate', 'severe']
 
   async ngOnInit(): Promise<void> {
 
     const profile = await this.userSvc.retrieveProfile().then(res => this.profile = res)
-    console.log(profile)
-    this.profile = profile
-    console.log(profile)
+    // console.log(profile)
+    // this.profile = profile
+    // console.log(profile)
     this.medProfile = this.createMedProfile()
   }
 
@@ -44,11 +47,15 @@ export class ProfileComponent {
     return !ctrl?.pristine && !!ctrl?.valid
   }
 
-  protected processForm() {
+  protected async processForm() {
     const profile: MedicalProfileDetails = this.medProfile.value
-    this.isEditing = false
+    await this.userSvc.updateProfile(profile)
+    await this.userSvc.retrieveProfile().then(res =>{
+      this.profile = res
+      this.isEditing = false
+    })
     console.info(">>>medicine profile: ", profile)
-    this.userSvc.updateProfile(profile)
+    console.info("curr this profile: ", this.profile)
   }
 
   //getters

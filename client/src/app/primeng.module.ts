@@ -7,7 +7,8 @@ import { ButtonModule } from 'primeng/button';
 import { DropdownModule } from 'primeng/dropdown';
 import { TabMenuModule } from 'primeng/tabmenu';
 import { TableModule } from 'primeng/table';
-
+import { TextareaModule } from 'primeng/textarea';
+import { DatePickerModule } from 'primeng/datepicker';
 
 
 @NgModule({
@@ -17,7 +18,9 @@ import { TableModule } from 'primeng/table';
         ButtonModule,
         DropdownModule,
         TabMenuModule,
-        TableModule
+        TableModule,
+        TextareaModule,
+        DatePickerModule
     ]
 })
 

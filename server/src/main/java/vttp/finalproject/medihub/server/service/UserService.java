@@ -62,10 +62,8 @@ public class UserService {
         Optional<List<Document>> prof = profileRepo.retrieveProfile(uid);
 
         if (prof.isEmpty()){
-            System.out.println("emtpy");
             return Optional.empty();
         }
-        System.out.println(prof.get().size());
         List<Document> profiles = prof.get();
         String profile = profiles.get(0).toJson();
         return Optional.ofNullable(profile);

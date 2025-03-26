@@ -38,8 +38,8 @@ export class UserService {
         )
     }
 
-    updateProfile(medProfile:MedicalProfileDetails):void {
-        firstValueFrom(this.http.put<MedicalProfileDetails>('/api/user/updateprofile', medProfile)).then(res =>{console.log(res)})
+    updateProfile(medProfile:MedicalProfileDetails):Promise<void> {
+        return firstValueFrom(this.http.put<MedicalProfileDetails>('/api/user/updateprofile', medProfile)).then(res =>{console.log(res)})
     }
 
 }
